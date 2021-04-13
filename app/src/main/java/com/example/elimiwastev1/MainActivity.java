@@ -1,9 +1,19 @@
 package com.example.elimiwastev1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,11 +27,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        createNotificationChannel();
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
         myRef.setValue("Yeet");
+
+        Button button = findViewById(R.id.button);
+
+        button.setOnClickListener(v -> {
+            Toast.makeText(this, "Reminder Set!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "notifyMe");
+            builder.setSmallIcon(R.drawable.ic_launcher_background);
+            builder.setContentTitle("My notification");
+            builder.setContentText("Milk expires soon");
+            builder.setStyle(new NotificationCompat.BigTextStyle().bigText("Much longer text that cannot fit one line..."));
+            builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+            builder.setAutoCancel(true);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
+            notificationManager.notify(200, builder.build());
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            long timeAtButtonClick = System.currentTimeMillis();
+            long tenSecondsInMillis = 3000;
+            alarmManager.set(AlarmManager.RTC_WAKEUP,
+                    timeAtButtonClick + tenSecondsInMillis,
+                    pendingIntent);
+            Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+        });
 
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
@@ -39,5 +77,18 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("MainActivity", "Failed to read value.", error.toException());
             }
         });
+    }
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "TheReminderChannel";
+            String description = "Channel for Reminder Reminder";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notifyMe", name, importance);
+            channel.setDescription(description);
+
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

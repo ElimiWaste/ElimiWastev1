@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "803088647701",
+    "firebase_url": "https://elimiwaste-277b9-default-rtdb.firebaseio.com",
+    "project_id": "elimiwaste-277b9",
+    "storage_bucket": "elimiwaste-277b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803088647701:android:ed03056883fb53a95e701c",
+        "android_client_info": {
+          "package_name": "com.example.elimiwastev1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803088647701-geolkkv8sucu6b07oecpvnp1jdva8pcr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_0jab1GeHs9dYKskK7lDrB9NmAximqJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803088647701-geolkkv8sucu6b07oecpvnp1jdva8pcr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
