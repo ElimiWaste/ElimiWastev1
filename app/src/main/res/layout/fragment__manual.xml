@@ -1,64 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".fragment_Manual">
+    tools:context=".fragment_Home">
 
-    <LinearLayout
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/itemLabel"
-            android:layout_width="match_parent"
+            android:id="@+id/homePage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enter_in_a_food_item_name" />
+            android:text="@string/home"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <EditText
-            android:id="@+id/itemName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/enter_in_the_food_name"
-            android:inputType="textPersonName|text"
-            android:text="@string/enter_in_food_item"
-            android:autofillHints="" />
-
-        <TextView
-            android:id="@+id/dateLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/enter_in_the_expiration_date" />
-
-        <EditText
-            android:id="@+id/dateEntry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/enter_in_the_food_item_s_expiration_date"
-            android:inputType="date"
-            android:text="@string/enter_in_the_date" />
-
-        <Button
-            android:id="@+id/addEntry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_item_to_list" />
-
-        <Button
-            android:id="@+id/viewList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/view_current_list" />
-
-        <ListView
-            android:id="@+id/itemList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
