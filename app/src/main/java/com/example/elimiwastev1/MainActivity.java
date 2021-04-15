@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
-
+        //Testing Firebase Connection
         myRef.setValue("Yeet");
 
         Button button = findViewById(R.id.button);
