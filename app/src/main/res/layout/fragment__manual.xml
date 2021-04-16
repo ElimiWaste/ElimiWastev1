@@ -8,41 +8,58 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".manual_Test">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/itemLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter Food Item Name"
+            android:textColor="#191818"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/itemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="Enter in the name of the food item"
+            android:inputType="text"
+            />
+
+        <TextView
+            android:id="@+id/dateLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter Purchase Date"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/dateEntry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="Enter the date of purchase"
+            android:inputType="date" />
+
+        <Button
+            android:id="@+id/addEntry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add" />
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/item"
-        android:hint="Enter Item Name"
-        android:textSize="20sp" />
+        <ListView
+            android:id="@+id/itemList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/date"
-        android:hint="Enter Item Name"
-        android:textSize="20sp" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/save"
-        android:layout_margin="30dp"
-        android:text="Save Item"
-        />
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/LW" />
     </LinearLayout>
 
 </FrameLayout>

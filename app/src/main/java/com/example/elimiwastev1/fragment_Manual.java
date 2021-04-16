@@ -20,11 +20,6 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class fragment_Manual extends Fragment {
-    EditText itemName, itemDate;
-    Button save;
-    ListView groceryList;
-    String itemName2, itemDate2;
-    ArrayList<LvItem> arrayList = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -66,35 +61,6 @@ public class fragment_Manual extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-        itemName = getView().findViewById(R.id.item);
-        itemDate = getView().findViewById(R.id.date);
-        save = getView().findViewById(R.id.save);
-        groceryList = getView().findViewById(R.id.LW);
-
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                itemName2 = itemName.getText().toString();
-                itemDate2 = itemDate.getText().toString();
-
-                LvItem lvItem = new LvItem();
-                lvItem.setItemName(itemName2);
-                lvItem.setItemName(itemDate2);
-                arrayList.add(lvItem);
-
-
-                ContactAdapter contactAdapter = new ContactAdapter(arrayList,fragment_Manual.this);
-                groceryList.setAdapter(contactAdapter);
-
-
-
-
-
-
-            }
-        });
     }
 
     @Override
