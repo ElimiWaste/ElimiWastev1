@@ -2,11 +2,17 @@ package com.example.elimiwastev1;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +20,11 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class fragment_Manual extends Fragment {
+    EditText itemName, itemDate;
+    Button save;
+    ListView groceryList;
+    String itemName2, itemDate2;
+    ArrayList<LvItem> arrayList = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,6 +57,8 @@ public class fragment_Manual extends Fragment {
         return fragment;
     }
 
+   // Error fixed from: https://itqna.net/questions/35978/error-calling-getlayoutinflater-inside-fragment
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +68,33 @@ public class fragment_Manual extends Fragment {
         }
 
 
+        itemName = getView().findViewById(R.id.item);
+        itemDate = getView().findViewById(R.id.date);
+        save = getView().findViewById(R.id.save);
+        groceryList = getView().findViewById(R.id.LW);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                itemName2 = itemName.getText().toString();
+                itemDate2 = itemDate.getText().toString();
+
+                LvItem lvItem = new LvItem();
+                lvItem.setItemName(itemName2);
+                lvItem.setItemName(itemDate2);
+                arrayList.add(lvItem);
+
+
+                ContactAdapter contactAdapter = new ContactAdapter(arrayList,fragment_Manual.this);
+                groceryList.setAdapter(contactAdapter);
+
+
+
+
+
+
+            }
+        });
     }
 
     @Override

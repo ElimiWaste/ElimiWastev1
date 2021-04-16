@@ -27,7 +27,7 @@ public class manual_Test extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.manual_test);
+        setContentView(R.layout.fragment__manual);
 
 
         itemName = findViewById(R.id.item);
@@ -47,8 +47,8 @@ public class manual_Test extends AppCompatActivity {
                 arrayList.add(lvItem);
 
 
-                ContactAdapter contactAdapter = new ContactAdapter(arrayList,manual_Test.this);
-                groceryList.setAdapter(contactAdapter);
+               // ContactAdapter contactAdapter = new ContactAdapter(arrayList,fragment_Manual.this);
+              //  groceryList.setAdapter(contactAdapter);
 
 
 
