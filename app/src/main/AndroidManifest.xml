@@ -23,7 +23,8 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".edit_delete_text_page"
-            android:parentActivityName=".manual_Test">
+            android:parentActivityName=".manual_Test"
+            android:theme="@style/Theme.AppCompat.Custom">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".manual_Test" />

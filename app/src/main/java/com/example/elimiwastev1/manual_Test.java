@@ -40,7 +40,7 @@ import static com.example.elimiwastev1.R.layout.edit_delete_box;
 // Current Time: https://stackoverflow.com/questions/5369682/how-to-get-current-time-and-date-in-android
 // Pop-up design adapted from: https://www.youtube.com/watch?v=cNVAhzaLYtw&t=70s
 // Simple Manual Entry adapted from: https://www.youtube.com/watch?v=1vN_wuAahqA
-// Pop up Window adpated from: https://stackoverflow.com/questions/23028480/android-how-to-create-popup-window
+// Pop up Window Adapted from: https://stackoverflow.com/questions/23028480/android-how-to-create-popup-window
 //TODO: convert to work as fragment or add code to fragment_Manual for it to work, (this will solve navigation issues)
 //TODO: add SQLite to this class to store user data, tutorial in MSPlanner
 //TODO: save data as subItem list, need to create adapter class (in progress see code below)
@@ -49,6 +49,8 @@ import static com.example.elimiwastev1.R.layout.edit_delete_box;
 //Notes:
 //Right now, the data is not saved in a class so it does not save when the edit_delete_box activity is opened
 //Currently working on the popup feature for editing and deleting text!
+//Additionally, there are errors in using the showPopup class
+
 public class manual_Test extends AppCompatActivity {
     Button addUserEntry;
     Button currentDateItem;
@@ -56,8 +58,8 @@ public class manual_Test extends AppCompatActivity {
     EditText txt;
     EditText date;
     ListView groceryList;
-    View edDelBox;
     PopupWindow newWin;
+    int index;
 
     //Pop-up
     ArrayAdapter<String> adapter;
@@ -109,17 +111,34 @@ public class manual_Test extends AppCompatActivity {
         groceryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                box(addArray.get(position), position);
-                 // showPopup(view, addArray.get(position), position);
-
+               box(addArray.get(position), position);
+                // showPopup(addArray.get(position), position); - Method does not work
+                // setIndex(position);
             }
         });
     }
 
+    public void box(String currentItem, int itemIndex) {
+        Intent intent = new Intent(this, edit_delete_text_page.class);
+        startActivityForResult(intent, itemIndex);
+
+    }
+
+    //Setter to to set index for edit_delete_text_page
+   /* public void setIndex(int num){
+        index = num;
+    }
+
+    //Getter to get index for edit_delete_text_page
+    public int getIndex(){
+        return index;
+    } */
+
     //TODO: Find a way to store data to test for editing and deleting
-    public void showPopup(View v, String currentItem, int itemIndex) {
+    //Method does not work completely, there is an error, it crashes
+  /*  public void showPopup(String currentItem, int itemIndex) {
         LayoutInflater newInflate = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        edDelBox = newInflate.inflate(R.layout.edit_delete_box, null);
+        View edDelBox = newInflate.inflate(R.layout.edit_delete_box, null);
         newWin = new PopupWindow(edDelBox, 480,500,true);
         newWin.showAtLocation(edDelBox, Gravity.CENTER, 0, 40);
 
@@ -148,24 +167,18 @@ public class manual_Test extends AppCompatActivity {
             public void onClick(View view) {
                 addArray.remove(itemIndex);
                 adapter.notifyDataSetChanged();
+                newWin.dismiss();
+
             }
         });
 
-    }
-        public void box(String currentItem, int itemIndex) {
-        Intent intent = new Intent(this, edit_delete_text_page.class);
-          startActivity(intent);
+    } */
 
-       }
+
 
 }
 
-
-
-
-
-
-  //Experimenting with other tutorial, doesn't work as expected, kept for future reference
+  //Experimenting with other tutorial, doesn't work as expected, kept for future reference to have two column list
 
    /* EditText itemName, itemDate;
     Button save;

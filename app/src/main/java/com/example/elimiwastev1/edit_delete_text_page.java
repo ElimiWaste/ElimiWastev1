@@ -2,6 +2,7 @@ package com.example.elimiwastev1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,8 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-//TODO: Add functionality, just a UI
-public class edit_delete_text_page extends AppCompatActivity {
+//Adapted from: https://www.youtube.com/watch?v=fn5OlqQuOCk
+public class edit_delete_text_page extends manual_Test {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +25,37 @@ public class edit_delete_text_page extends AppCompatActivity {
         Button edit = (Button)findViewById(R.id.btdone);
         Button delete = (Button)findViewById(R.id.btndelete);
 
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        int w = dm.widthPixels;
+        int h = dm.heightPixels;
+
+        getWindow().setLayout((int)(w*0.8), (int)(h*0.6));
+
+        //ERROR, need to debug, it crashes when run
+       /*  edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addArray.set(getIndex(), newEdit.getText().toString());
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addArray.remove(getIndex());
+                adapter.notifyDataSetChanged();
+            }
+        }); */
+
+
+
 
     }
+
+
 }
