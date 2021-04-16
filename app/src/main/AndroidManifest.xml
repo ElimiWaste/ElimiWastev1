@@ -22,6 +22,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity android:name=".edit_delete_text_page"
+            android:parentActivityName=".manual_Test">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".manual_Test" />
+        </activity>
+
     </application>
 
 </manifest>
