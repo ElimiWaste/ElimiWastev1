@@ -1,6 +1,8 @@
 package com.example.elimiwastev1;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ public class edit_delete_text_page extends AppCompatActivity {
 
         Button edit = (Button)findViewById(R.id.btdone);
         Button delete = (Button)findViewById(R.id.btndelete);
+
 
     }
 }
