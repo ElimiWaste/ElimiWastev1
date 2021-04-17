@@ -60,8 +60,6 @@ public class manual_Test extends AppCompatActivity {
     ListView groceryList;
     PopupWindow newWin;
     int index;
-
-    //Pop-up
     ArrayAdapter<String> adapter;
 
     @Override
