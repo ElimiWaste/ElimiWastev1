@@ -51,7 +51,7 @@ import static com.example.elimiwastev1.R.layout.edit_delete_box;
 //Currently working on the popup feature for editing and deleting text!
 //Additionally, there are errors in using the showPopup class
 
-public class manual_Test extends AppCompatActivity {
+public class Manual_Test extends AppCompatActivity {
     Button addUserEntry;
     Button currentDateItem;
     ArrayList<String> addArray = new ArrayList<String>();
@@ -80,7 +80,7 @@ public class manual_Test extends AppCompatActivity {
                 String in = txt.getText().toString() + " " + date.getText().toString();
                 Date currentTime = Calendar.getInstance().getTime();
                 addArray.add(in + " " + currentTime);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(manual_Test.this, android.R.layout.simple_list_item_1, addArray);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(Manual_Test.this, android.R.layout.simple_list_item_1, addArray);
                 groceryList.setAdapter(adapter);
                 ((EditText) findViewById(R.id.itemName)).setText(" ");
             }
@@ -99,7 +99,7 @@ public class manual_Test extends AppCompatActivity {
 
                 else {
                     addArray.add(getInput);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(manual_Test.this, android.R.layout.simple_list_item_1, addArray);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(Manual_Test.this, android.R.layout.simple_list_item_1, addArray);
                     groceryList.setAdapter(adapter);
                     ((EditText) findViewById(R.id.itemName)).setText(" ");
                 }
