@@ -36,12 +36,11 @@ public class MainActivity extends AppCompatActivity {
         myRef.setValue("Yeet");
 
         Button button2 = findViewById(R.id.button2);
-        button2.setOnClickListener( new View.OnClickListener() {
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent test = new Intent(MainActivity.this , manual_Test.class);
+                Intent test = new Intent(MainActivity.this , Manual_Test.class);
                 startActivity(test);
-
             }
         });
 

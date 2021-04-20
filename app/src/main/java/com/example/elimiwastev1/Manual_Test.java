@@ -52,6 +52,8 @@ import static com.example.elimiwastev1.R.layout.edit_delete_box;
 //Additionally, there are errors in using the showPopup class
 
 public class Manual_Test extends AppCompatActivity {
+
+    DatabaseHelper userEntryDB;
     Button addUserEntry;
     Button currentDateItem;
     ArrayList<String> addArray = new ArrayList<String>();
@@ -66,12 +68,15 @@ public class Manual_Test extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment__manual);
+        userEntryDB = new DatabaseHelper(this);
 
         txt = (EditText) findViewById(R.id.itemName);
         groceryList = (ListView) findViewById(R.id.itemList);
         date = (EditText) findViewById(R.id.dateEntry);
         addUserEntry = (Button) findViewById(R.id.addEntry);
         currentDateItem = (Button) findViewById(R.id.addWithDate);
+
+        AddData();
 
         //TODO: Re-format current Date
         currentDateItem.setOnClickListener(new View.OnClickListener() {
@@ -87,25 +92,6 @@ public class Manual_Test extends AppCompatActivity {
 
         });
 
-        addUserEntry.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                String getInput = txt.getText().toString() + " " + date.getText().toString();
-
-                if (getInput == null || date.getText().toString() == null || txt.getText().toString() == null || getInput.trim().equals("")) {
-                    Toast.makeText(getBaseContext(), "Empty Input", Toast.LENGTH_LONG).show();
-                }
-
-                else {
-                    addArray.add(getInput);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(Manual_Test.this, android.R.layout.simple_list_item_1, addArray);
-                    groceryList.setAdapter(adapter);
-                    ((EditText) findViewById(R.id.itemName)).setText(" ");
-                }
-            }
-
-        });
         groceryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -119,6 +105,40 @@ public class Manual_Test extends AppCompatActivity {
     public void box(String currentItem, int itemIndex) {
         Intent intent = new Intent(this, PopupWindow.class);
         startActivityForResult(intent, itemIndex);
+
+    }
+
+    public void AddData() { addUserEntry.setOnClickListener(new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            String getInput = txt.getText().toString();
+            String getDate = date.getText().toString();
+
+            boolean insertData = userEntryDB.addData(getInput, getDate);
+
+            if (insertData == true) {
+                Toast.makeText(Manual_Test.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(Manual_Test.this, "Aww Shucks! :(.", Toast.LENGTH_LONG).show();
+
+            }
+
+
+         /*  if (getInput == null || date.getText().toString() == null || txt.getText().toString() == null || getInput.trim().equals("")) {
+                Toast.makeText(getBaseContext(), "Empty Input", Toast.LENGTH_LONG).show();
+            }
+
+            else {
+                addArray.add(getInput);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(Manual_Test.this, android.R.layout.simple_list_item_1, addArray);
+                groceryList.setAdapter(adapter);
+                ((EditText) findViewById(R.id.itemName)).setText(" ");
+            } */
+
+        }
+    });
+
 
     }
 
