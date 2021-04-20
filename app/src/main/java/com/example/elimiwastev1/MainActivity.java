@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -33,6 +34,16 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("message");
         //Testing Firebase Connection
         myRef.setValue("Yeet");
+
+        Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent test = new Intent(MainActivity.this , manual_Test.class);
+                startActivity(test);
+
+            }
+        });
 
         Button button = findViewById(R.id.button);
 
@@ -91,4 +102,6 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+
 }
