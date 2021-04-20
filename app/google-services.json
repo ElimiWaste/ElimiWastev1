@@ -34,38 +34,6 @@
           ]
         }
       }
-<<<<<<< HEAD
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:803088647701:android:abfb77afd9cf055c5e701c",
-        "android_client_info": {
-          "package_name": "com.example.triviagame"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "803088647701-geolkkv8sucu6b07oecpvnp1jdva8pcr.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB_0jab1GeHs9dYKskK7lDrB9NmAximqJs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "803088647701-geolkkv8sucu6b07oecpvnp1jdva8pcr.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-=======
->>>>>>> origin/master
     }
   ],
   "configuration_version": "1"
