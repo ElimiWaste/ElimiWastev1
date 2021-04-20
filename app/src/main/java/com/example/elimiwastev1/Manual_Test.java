@@ -117,7 +117,7 @@ public class Manual_Test extends AppCompatActivity {
     }
 
     public void box(String currentItem, int itemIndex) {
-        Intent intent = new Intent(this, edit_delete_text_page.class);
+        Intent intent = new Intent(this, PopupWindow.class);
         startActivityForResult(intent, itemIndex);
 
     }
