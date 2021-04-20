@@ -3,6 +3,7 @@ package com.example.elimiwastev1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -34,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("message");
         //Testing Firebase Connection
         myRef.setValue("Yeet");
+
+        val bottomNavigationView = findViewById<BottomNavifationView>(R.id.navBar);
+        val navController = findNavController(R.id.nav_host_fragment_container);
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_Home, R.id.fragment_Manual, R.id.fragment_OCR));
+        setupActionBarWithNavController(navController, appBarConfiguration);
+
+        bottomNavigationView.setUpWithNavController(navController);
 
         Button button2 = findViewById(R.id.button2);
         button2.setOnClickListener( new View.OnClickListener() {
@@ -89,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "TheReminderChannel";
