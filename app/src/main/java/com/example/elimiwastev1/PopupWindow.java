@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 //Adapted from: https://www.youtube.com/watch?v=fn5OlqQuOCk
 //Works, but need to make background transparent
-public class edit_delete_text_page extends manual_Test {
+public class PopupWindow extends Manual_Test {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
