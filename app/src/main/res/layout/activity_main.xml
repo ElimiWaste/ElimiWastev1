@@ -17,53 +17,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="60dp"
         android:text="@string/click_for_manual"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/edit_text_title"
-        android:layout_width="326dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="20dp"
-        android:hint="Title of notification"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-    <EditText
-        android:id="@+id/edit_text_message"
-        android:layout_width="326dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="28dp"
-        android:hint="Message of notification"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_title" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:onClick="sendOnChannel1"
-        android:text="send on channel 1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_message" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:onClick="sendOnChannel2"
-        android:text="send on channel 2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="414dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navBar"
@@ -76,8 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
 
-
-<!-- <androidx.fragment.app.FragmentContainerView
+ <androidx.fragment.app.FragmentContainerView
         android:id = "@+id/fragment"
         android:name = "androidx.navigation.fragment.NavHostFragment"
         android:layout_width="409dp"
@@ -88,6 +50,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph = "@navigation/nav_home" />
-    -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
