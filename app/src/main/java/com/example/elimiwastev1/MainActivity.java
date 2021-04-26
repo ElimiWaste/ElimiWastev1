@@ -6,6 +6,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,12 +26,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
+    //Variables for Notifications
+    private NotificationManagerCompat notificationManager;
+    private EditText editTextTitle;
+    private EditText editTextMessage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        createNotificationChannel();
+
+        //assign notification variables with context from Notification ManagerCompat
+        notificationManager = NotificationManagerCompat.from(this);
+
+        editTextTitle = findViewById((R.id.edit_text_title));
+        editTextMessage = findViewById(R.id.edit_text_message);
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
@@ -52,33 +64,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button = findViewById(R.id.button);
-
-        button.setOnClickListener(v -> {
-            Toast.makeText(this, "Reminder Set!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, ReminderBroadcast.class);
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "notifyMe");
-            builder.setSmallIcon(R.drawable.ic_launcher_background);
-            builder.setContentTitle("My notification");
-            builder.setContentText("Milk expires soon");
-            builder.setStyle(new NotificationCompat.BigTextStyle().bigText("Much longer text that cannot fit one line..."));
-            builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            builder.setAutoCancel(true);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
-            notificationManager.notify(200, builder.build());
-
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            long timeAtButtonClick = System.currentTimeMillis();
-            long tenSecondsInMillis = 3000;
-            alarmManager.set(AlarmManager.RTC_WAKEUP,
-                    timeAtButtonClick + tenSecondsInMillis,
-                    pendingIntent);
-            Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
-        });
-
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -97,19 +82,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "TheReminderChannel";
-            String description = "Channel for Reminder Reminder";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("notifyMe", name, importance);
-            channel.setDescription(description);
+    //Create and send notification through notification channel 1 on click of the corresponding button. Should show up as a circle thing
+    public void sendOnChannel1(View v) {
+        String title = editTextTitle.getText().toString();
+        String message = editTextMessage.getText().toString();
 
+        Notification notification = new NotificationCompat.Builder(this, "notifications")
+                .setSmallIcon(R.drawable.ic_one)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
 
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
+        notificationManager.notify(1, notification);
     }
+    //Create and send notification through notification channel 2 on click of the corresponding button. Should show up as a grass thing
+    public void sendOnChannel2(View v){
+        String title = editTextTitle.getText().toString();
+        String message = editTextMessage.getText().toString();
 
+        Notification notification = new NotificationCompat.Builder(this, Notifications.CHANNEL_2_ID)
+                .setSmallIcon(R.drawable.ic_baseline_no_food_24)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .build();
+
+        notificationManager.notify(2, notification);
+    }
 
 }
