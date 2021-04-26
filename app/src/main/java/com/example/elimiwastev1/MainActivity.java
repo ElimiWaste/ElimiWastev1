@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         //Testing Firebase Connection
         myRef.setValue("Yeet");
 
-        val bottomNavigationView = findViewById<BottomNavifationView>(R.id.navBar);
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navBar);
         val navController = findNavController(R.id.nav_host_fragment_container);
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_Home, R.id.fragment_Manual, R.id.fragment_OCR));
         setupActionBarWithNavController(navController, appBarConfiguration);
