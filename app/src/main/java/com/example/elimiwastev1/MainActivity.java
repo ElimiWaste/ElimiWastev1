@@ -3,7 +3,10 @@ package com.example.elimiwastev1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        BottomNavigationView navBar = findViewById(R.id.navBar);
+        NavController navController = Navigation.findNavController(this, R.id.fragment);
+        NavigationUI.setupWithNavController(navBar, navController);
+
         createNotificationChannel();
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -36,12 +45,7 @@ public class MainActivity extends AppCompatActivity {
         //Testing Firebase Connection
         myRef.setValue("Yeet");
 
-     /*   val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navBar);
-        val navController = findNavController(R.id.nav_host_fragment_container);
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_Home, R.id.fragment_Manual, R.id.fragment_OCR));
-        setupActionBarWithNavController(navController, appBarConfiguration);
 
-        bottomNavigationView.setUpWithNavController(navController); */
 
         Button button2 = findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
