@@ -56,6 +56,7 @@ public class Manual_Test extends AppCompatActivity {
     DatabaseHelper userEntryDB;
     Button addUserEntry;
     Button currentDateItem;
+    Button btnView;
     ArrayList<String> addArray = new ArrayList<String>();
     EditText txt;
     EditText date;
@@ -75,8 +76,37 @@ public class Manual_Test extends AppCompatActivity {
         date = (EditText) findViewById(R.id.dateEntry);
         addUserEntry = (Button) findViewById(R.id.addEntry);
         currentDateItem = (Button) findViewById(R.id.addWithDate);
+        btnView = (Button) findViewById(R.id.viewContent);
 
-        AddData();
+        btnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Manual_Test.this, ViewContent.class);
+                startActivity(intent);
+            }
+        });
+
+        addUserEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String getInput = txt.getText().toString();
+                String getDate = date.getText().toString();
+
+                if ((getInput.length() != 0) && (getDate.length() != 0)) {
+                    AddData(getInput, getDate);
+                    txt.setText("");
+                    date.setText("");
+
+                }
+
+                else{
+                    Toast.makeText(Manual_Test.this, "You must put in a food item name", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+
+        });
 
         //TODO: Re-format current Date
         currentDateItem.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +125,7 @@ public class Manual_Test extends AppCompatActivity {
         groceryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               box(addArray.get(position), position);
+                box(addArray.get(position), position);
                 // showPopup(addArray.get(position), position); - Method does not work
                 // setIndex(position);
             }
@@ -108,37 +138,47 @@ public class Manual_Test extends AppCompatActivity {
 
     }
 
-    public void AddData() { addUserEntry.setOnClickListener(new View.OnClickListener() {
+    public void AddData(String name, String currentDate) {
+        boolean insertData = userEntryDB.addData(name, currentDate);
 
-        @Override
-        public void onClick(View v) {
-            String getInput = txt.getText().toString();
-            String getDate = date.getText().toString();
-
-            boolean insertData = userEntryDB.addData(getInput, getDate);
-
-            if (insertData == true) {
-                Toast.makeText(Manual_Test.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(Manual_Test.this, "Aww Shucks! :(.", Toast.LENGTH_LONG).show();
-
-            }
-
-
-         /*  if (getInput == null || date.getText().toString() == null || txt.getText().toString() == null || getInput.trim().equals("")) {
-                Toast.makeText(getBaseContext(), "Empty Input", Toast.LENGTH_LONG).show();
-            }
-
-            else {
-                addArray.add(getInput);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(Manual_Test.this, android.R.layout.simple_list_item_1, addArray);
-                groceryList.setAdapter(adapter);
-                ((EditText) findViewById(R.id.itemName)).setText(" ");
-            } */
+        if(insertData == true) {
+            Toast.makeText(Manual_Test.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(Manual_Test.this, "Aww Shucks! :(.", Toast.LENGTH_LONG).show();
 
         }
-    });
 
+        addUserEntry.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String getInput = txt.getText().toString();
+                String getDate = date.getText().toString();
+
+                boolean insertData = userEntryDB.addData(getInput, getDate);
+
+                if (insertData == true) {
+                    Toast.makeText(Manual_Test.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
+                }
+                else if (getInput == null || getDate == null){
+                    Toast.makeText(Manual_Test.this, "Aww Shucks! :(.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(Manual_Test.this, "Aww Shucks! :(.", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+    }
+
+
+    }
+
+   /*  if (getInput == null || date.getText().toString() == null || txt.getText().toString() == null || getInput.trim().equals("")) {
+                Toast.makeText(getBaseContext(), "Empty Input", Toast.LENGTH_LONG).show();
+            }
 
     }
 
@@ -194,7 +234,7 @@ public class Manual_Test extends AppCompatActivity {
 
 
 
-}
+
 
   //Experimenting with other tutorial, doesn't work as expected, kept for future reference to have two column list
 
