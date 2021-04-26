@@ -60,6 +60,12 @@
             android:layout_height="wrap_content"
             android:text="Add Item With Current Date" />
 
+        <Button
+            android:id="@+id/viewContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Current List" />
+
 
         <ListView
             android:id="@+id/itemList"
