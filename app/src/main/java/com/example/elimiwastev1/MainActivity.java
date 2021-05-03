@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navBar = findViewById(R.id.navBar);
-        NavController navController = Navigation.findNavController(this, R.id.fragment);
-        NavigationUI.setupWithNavController(navBar,navController);
+        //NavController navController = Navigation.findNavController(this, R.id.fragment);
+       // NavigationUI.setupWithNavController(navBar,navController);
 
         //assign notification variables with context from Notification ManagerCompat
         notificationManager = NotificationManagerCompat.from(this);

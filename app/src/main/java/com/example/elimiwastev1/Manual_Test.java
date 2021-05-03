@@ -2,6 +2,7 @@ package com.example.elimiwastev1;
 
 import android.app.ActionBar;
 import android.app.Dialog;
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ListMenuItemView;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -52,6 +55,8 @@ import static com.example.elimiwastev1.R.layout.edit_delete_box;
 //Additionally, there are errors in using the showPopup class
 
 public class Manual_Test extends AppCompatActivity {
+    //For notifications
+    private NotificationManagerCompat notificationManager;
 
     DatabaseHelper userEntryDB;
     Button addUserEntry;
@@ -69,6 +74,9 @@ public class Manual_Test extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment__manual);
+
+        notificationManager = NotificationManagerCompat.from(this);
+
         userEntryDB = new DatabaseHelper(this);
 
         txt = (EditText) findViewById(R.id.itemName);
@@ -96,7 +104,6 @@ public class Manual_Test extends AppCompatActivity {
                     AddData(getInput, getDate);
                     txt.setText("");
                     date.setText("");
-
                 }
 
                 else{
@@ -143,6 +150,16 @@ public class Manual_Test extends AppCompatActivity {
 
         if(insertData == true) {
             Toast.makeText(Manual_Test.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
+            //Will send out a notification immediately. Will change so that it will send it out at a later date.
+            Notification notification = new NotificationCompat.Builder(Manual_Test.this, "notifications")
+                    .setSmallIcon(R.drawable.ic_one)
+                    .setContentTitle(txt.getText().toString() + " expires soon!")
+                    .setContentText("Your item will expire on " + date.getText().toString())
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                    .build();
+
+            notificationManager.notify(1, notification);
         }
         else {
             Toast.makeText(Manual_Test.this, "Aww Shucks! :(.", Toast.LENGTH_LONG).show();
