@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
 
-        Notification notification = new NotificationCompat.Builder(this, "notifications")
+        Notification notification = new NotificationCompat.Builder(this, NotifChannels.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_one)
                 .setContentTitle(title)
                 .setContentText(message)
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
 
-        Notification notification = new NotificationCompat.Builder(this, Notifications.CHANNEL_2_ID)
+        Notification notification = new NotificationCompat.Builder(this, NotifChannels.CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_baseline_no_food_24)
                 .setContentTitle(title)
                 .setContentText(message)

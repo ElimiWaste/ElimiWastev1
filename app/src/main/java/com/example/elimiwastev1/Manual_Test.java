@@ -1,8 +1,11 @@
 package com.example.elimiwastev1;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,8 +66,10 @@ public class Manual_Test extends AppCompatActivity {
     Button currentDateItem;
     Button btnView;
     ArrayList<String> addArray = new ArrayList<String>();
-    EditText txt;
-    EditText date;
+    //@SuppressLint("StaticFieldLeak")
+    public static EditText txt;
+    //@SuppressLint("StaticFieldLeak")
+    public static EditText date;
     ListView groceryList;
     PopupWindow newWin;
     int index;
@@ -149,9 +154,23 @@ public class Manual_Test extends AppCompatActivity {
         boolean insertData = userEntryDB.addData(name, currentDate);
 
         if(insertData == true) {
-            Toast.makeText(Manual_Test.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
-            //Will send out a notification immediately. Will change so that it will send it out at a later date.
-            Notification notification = new NotificationCompat.Builder(Manual_Test.this, "notifications")
+            Toast.makeText(Manual_Test.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
+            //Will send out a notification with a wait time determined by variable long waitTime
+
+            Intent intent = new Intent(Manual_Test.this, ReminderBroadcast.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(Manual_Test.this, 0, intent, 0);
+
+            AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+            long timeOfEnter = System.currentTimeMillis();
+
+            long waitTime = 1000 * (0);
+            //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
+            AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
+                    timeOfEnter + waitTime,
+                    pendingIntent);
+
+          /*  Notification notification = new NotificationCompat.Builder(Manual_Test.this, "notifications")
                     .setSmallIcon(R.drawable.ic_one)
                     .setContentTitle(txt.getText().toString() + " expires soon!")
                     .setContentText("Your item will expire on " + date.getText().toString())
@@ -159,7 +178,7 @@ public class Manual_Test extends AppCompatActivity {
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                     .build();
 
-            notificationManager.notify(1, notification);
+            notificationManager.notify(1, notification);*/
         }
         else {
             Toast.makeText(Manual_Test.this, "Aww Shucks! :(.", Toast.LENGTH_LONG).show();

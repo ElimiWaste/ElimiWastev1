@@ -3,7 +3,7 @@
     package="com.example.elimiwastev1">
 
     <application
-        android:name =".Notifications"
+        android:name =".NotifChannels"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -31,9 +31,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Manual_Test" />
         </activity>
-        <activity android:name=".ViewContent"
-            android:parentActivityName=".Manual_Test"
-            ></activity>
+        <activity
+            android:name=".ViewContent"
+            android:parentActivityName=".Manual_Test" />
+
+        <receiver android:name=".ReminderBroadcast"/>
+
 
     </application>
 
