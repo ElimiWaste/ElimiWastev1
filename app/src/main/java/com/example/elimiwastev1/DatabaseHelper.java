@@ -83,12 +83,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor getItemName(String ID) {
+    public Cursor getItemName(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + COL2 + " FROM " + TABLE_NAME +
-                " WHERE " + COL1 + " = '" + ID + "'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
+                " WHERE " + COL1 + " = '" + id + "'";
+        return db.rawQuery(query, null);
     }
 
     public void updateName(String newName, int id, String oldName){

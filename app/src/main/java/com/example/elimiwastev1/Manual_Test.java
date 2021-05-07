@@ -75,6 +75,7 @@ public class Manual_Test extends AppCompatActivity {
     int index;
     ArrayAdapter<String> adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,11 +155,12 @@ public class Manual_Test extends AppCompatActivity {
         boolean insertData = userEntryDB.addData(name, currentDate);
 
         if(insertData == true) {
+
             Toast.makeText(Manual_Test.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
             //Will send out a notification with a wait time determined by variable long waitTime
 
             Intent intent = new Intent(Manual_Test.this, ReminderBroadcast.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(Manual_Test.this, 0, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
             AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
