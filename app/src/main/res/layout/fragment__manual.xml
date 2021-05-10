@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="Enter Food Item Name"
             android:textColor="#191818"
-            android:textSize="25sp" />
+            android:textSize="25sp"/>
 
         <EditText
             android:id="@+id/itemName"
