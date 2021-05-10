@@ -30,18 +30,15 @@ public class ReminderBroadcast extends BroadcastReceiver{
                 .setContentTitle("The first food is " + name)
                 .setContentText("TBD" )
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .build();
-
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         notificationManager.notify(1, notification);
 
 
-//
 //        Notification notification = new NotificationCompat.Builder(this, NotifChannels.CHANNEL_1_ID)
 //                .setSmallIcon(R.drawable.ic_one)
 //                .setContentTitle(title)
