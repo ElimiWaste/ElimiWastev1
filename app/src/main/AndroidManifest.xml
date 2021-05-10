@@ -31,12 +31,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Manual_Test" />
         </activity>
-        <activity
-            android:name=".ViewContent"
-            android:parentActivityName=".Manual_Test" />
-
-        <receiver android:name=".ReminderBroadcast"/>
-
+        <activity android:name=".ViewContent"
+            android:parentActivityName=".Manual_Test"
+            ></activity>
 
     </application>
 

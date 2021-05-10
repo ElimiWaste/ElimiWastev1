@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextMessage;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -50,18 +50,18 @@ public class MainActivity extends AppCompatActivity {
 
         editTextTitle = findViewById((R.id.edit_text_title));
         editTextMessage = findViewById(R.id.edit_text_message);
+
+//        BottomNavigationView navBar = findViewById(R.id.navBar);
+//        NavController navController = Navigation.findNavController(this, R.id.fragment);
+//        NavigationUI.setupWithNavController(navBar, navController);
+
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
         //Testing Firebase Connection
         myRef.setValue("Yeet");
 
-     /*   val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navBar);
-        val navController = findNavController(R.id.nav_host_fragment_container);
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_Home, R.id.fragment_Manual, R.id.fragment_OCR));
-        setupActionBarWithNavController(navController, appBarConfiguration);
 
-        bottomNavigationView.setUpWithNavController(navController); */
 
         Button button2 = findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
@@ -119,5 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager.notify(2, notification);
     }
+
 
 }
