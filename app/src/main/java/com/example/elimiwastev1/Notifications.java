@@ -5,14 +5,16 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 //Nothing here
-public class NotifChannels extends Application {
+public class Notifications extends Application {
     public static final String CHANNEL_1_ID = "notifications";
     public static final String CHANNEL_2_ID = "notifications2";
 
     @Override
     public void onCreate() {
         super.onCreate();
+
         createNotificationsChannels();
+
     }
 
     private void createNotificationsChannels(){

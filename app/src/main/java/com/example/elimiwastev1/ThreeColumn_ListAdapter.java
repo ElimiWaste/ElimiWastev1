@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.elimiwastev1.R;
-import com.example.elimiwastev1.User;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ThreeColumn_ListAdapter extends ArrayAdapter<User> {

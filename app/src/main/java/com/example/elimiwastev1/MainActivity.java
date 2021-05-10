@@ -1,26 +1,19 @@
 package com.example.elimiwastev1;
 //3
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
 
-import android.app.AlarmManager;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -35,39 +28,48 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextTitle;
     private EditText editTextMessage;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navBar = findViewById(R.id.navBar);
-        //NavController navController = Navigation.findNavController(this, R.id.fragment);
-       // NavigationUI.setupWithNavController(navBar,navController);
+        navBar.setOnNavigationItemSelectedListener(navListener);
+
+        //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
+        //NavigationUI.setupWithNavController(navBar,navController);
+
+        //Set<Integer> topLevelDestinations = new HashSet<>();
+        //topLevelDestinations.add(R.id.fragment_OCR);
+        //topLevelDestinations.add(R.id.fragment_Manual);
+        //topLevelDestinations.add(R.id.fragment_Home);
+        //AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).build();
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         //assign notification variables with context from Notification ManagerCompat
         notificationManager = NotificationManagerCompat.from(this);
 
-        editTextTitle = findViewById((R.id.edit_text_title));
-        editTextMessage = findViewById(R.id.edit_text_message);
-
-//        BottomNavigationView navBar = findViewById(R.id.navBar);
-//        NavController navController = Navigation.findNavController(this, R.id.fragment);
-//        NavigationUI.setupWithNavController(navBar, navController);
-
+        // editTextTitle = findViewById((R.id.edit_text_title));
+        // editTextMessage = findViewById(R.id.edit_text_message);
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
         //Testing Firebase Connection
         myRef.setValue("Yeet");
 
+     /*   val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navBar);
+        val navController = findNavController(R.id.nav_host_fragment_container);
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_Home, R.id.fragment_Manual, R.id.fragment_OCR));
+        setupActionBarWithNavController(navController, appBarConfiguration);
 
+        bottomNavigationView.setUpWithNavController(navController); */
 
         Button button2 = findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent test = new Intent(MainActivity.this , Manual_Test.class);
+                Intent test = new Intent(MainActivity.this, Manual_Test.class);
                 startActivity(test);
             }
         });
@@ -90,12 +92,37 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    Fragment selectedFragment = null;
+
+                    switch (item.getItemId()) {
+                        case R.id.fragment_Home:
+                            selectedFragment = new fragment_Home();
+                            break;
+                        case R.id.fragment_Manual:
+                            selectedFragment = new fragment_Manual();
+                            break;
+                        case R.id.fragment_OCR:
+                            selectedFragment = new fragment_OCR();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, selectedFragment).commit();
+
+                    return true;
+                }
+            };
+
+
     //Create and send notification through notification channel 1 on click of the corresponding button. Should show up as a circle thing
     public void sendOnChannel1(View v) {
         String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
 
-        Notification notification = new NotificationCompat.Builder(this, NotifChannels.CHANNEL_1_ID)
+        Notification notification = new NotificationCompat.Builder(this, "notifications")
                 .setSmallIcon(R.drawable.ic_one)
                 .setContentTitle(title)
                 .setContentText(message)
@@ -110,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
 
-        Notification notification = new NotificationCompat.Builder(this, NotifChannels.CHANNEL_2_ID)
+        Notification notification = new NotificationCompat.Builder(this, Notifications.CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_baseline_no_food_24)
                 .setContentTitle(title)
                 .setContentText(message)
@@ -119,6 +146,5 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager.notify(2, notification);
     }
-
 
 }
