@@ -7,11 +7,14 @@ import java.util.Random;
 
 public class Controller extends Application {
 
-    ArrayList<Food> foods = new ArrayList<Food>();
+    ArrayList<Food> foodList = new ArrayList<Food>();
 
     public ArrayList<Food> getFood() {
-        return foods;
+        return foodList;
     }
 
+    public void addFood(Food yummy) {
+        foodList.add(yummy);
+    }
 
 }
