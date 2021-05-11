@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import static android.content.ContentValues.TAG;
-
 // import androidx.annotation.Nullable;
 // TODO: Add one more date field 
 
@@ -20,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL1 = "ID";
     public static final String COL2 = "NAME";
     public static final String COL3 = "DATE ";
+    private static final String TAG = "DatabaseHelper";
 
 
     public DatabaseHelper(Context context) {
@@ -46,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, name);
         contentValues.put(COL3, date);
+
         Log.d(TAG, "addData: Adding " + name + " to " + TABLE_NAME);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else {
             return true;
         }
-        // return result != -1;
+       // return result != -1;
 
 
     }
@@ -67,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public Cursor showData(){
+   public Cursor showData(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return data;
@@ -88,6 +88,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT " + COL2 + " FROM " + TABLE_NAME +
                 " WHERE " + COL1 + " = '" + id + "'";
         return db.rawQuery(query, null);
+    }
+    public int getRows() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int query = Integer.parseInt("SELECT " + "COUNT(*)" + "FROM" + TABLE_NAME);
+        return query;
     }
 
     public void updateName(String newName, int id, String oldName){
@@ -113,4 +118,3 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 }
-
