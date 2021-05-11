@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
         //Testing Firebase Connection
-        myRef.setValue("Yeet");
+//        myRef.setValue("Yeet");
 
      /*   val bottomNavigationView = findViewById<BottomNavigationView>(R.id.navBar);
         val navController = findNavController(R.id.nav_host_fragment_container);
