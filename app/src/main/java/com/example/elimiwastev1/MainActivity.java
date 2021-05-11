@@ -22,6 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class MainActivity extends AppCompatActivity {
     //Variables for Notifications
     private NotificationManagerCompat notificationManager;
@@ -52,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
         // editTextTitle = findViewById((R.id.edit_text_title));
         // editTextMessage = findViewById(R.id.edit_text_message);
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+//        // Write a message to the database
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("message");
         //Testing Firebase Connection
 //        myRef.setValue("Yeet");
 
@@ -74,22 +79,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d("MainActivity", "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("MainActivity", "Failed to read value.", error.toException());
-            }
-        });
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -145,6 +134,47 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         notificationManager.notify(2, notification);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        readQuestionDataFB();
+
+        // Get Global Controller Class object
+        final Controller aController = (Controller) getApplicationContext();
+
+        for(Food q : aController.getFood())
+            Log.v("MainActivity","Name: " + q.getName() + " Shelf Life: " + q.getLife());
+    }
+
+    private void readQuestionDataFB() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Food");
+
+        // Get Global Controller Class object
+        final Controller aController = (Controller) getApplicationContext();
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                for(DataSnapshot ds : dataSnapshot.getChildren() ){
+                    Food f = ds.getValue(Food.class);
+                    aController.addFood(f);
+                    Log.d("MainActivity", "Food Name: " + f.getName() + " Shelf Life: " + f.getLife());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("MainActivity", "Failed to read value.", error.toException());
+            }
+        });
+
     }
 
 }
