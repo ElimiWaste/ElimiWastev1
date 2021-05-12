@@ -1,5 +1,7 @@
 package com.example.elimiwastev1;
 
+import androidx.lifecycle.Lifecycle;
+
 public class Food {
 
     public String name;
@@ -11,8 +13,8 @@ public class Food {
     }
 
     public Food(){
-        this.name = "";
-        this.life = "";
+        name = "";
+        life = "";
     }
 
     public String getName() {

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        readQuestionDataFB();
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navBar = findViewById(R.id.navBar);
@@ -135,22 +136,53 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager.notify(2, notification);
     }
+//    private void readQuestionDataFile() {
+//        // Reads trivia data from file
+//        InputStream is = getResources().openRawResource(R.raw.fooddatabase);
+//
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+//
+//        // Get Global Controller Class object
+//        final Controller aController = (Controller) getApplicationContext();
+//
+//        String line = "";
+//        try {
+//            while ((line = reader.readLine()) != null) {
+//                // Split by ','
+//                String[] fields = line.split(",");
+//
+//                //Log.v("MainActivity", fields[0] + " " + fields[1]);
+//                Food q = new Food(fields[0], fields[1]);
+//                aController.addFood(q);
+//            }
+//        } catch (IOException e) {
+//            Log.wtf("MainActivity", "Error reading data on line: " + line);
+//        }
+//    }
 
-    @Override
+        @Override
     protected void onStart() {
         super.onStart();
-        readQuestionDataFB();
-
-        // Get Global Controller Class object
-        final Controller aController = (Controller) getApplicationContext();
-
-        for(Food q : aController.getFood())
-            Log.v("MainActivity","Name: " + q.getName() + " Shelf Life: " + q.getLife());
+//        readQuestionDataFile();
+//        readQuestionDataFB();
+//            // Get Global Controller Class object
+//            final Controller aController = (Controller) getApplicationContext();
+//
+//            // Write a message to the database
+//            FirebaseDatabase database = FirebaseDatabase.getInstance();
+//            DatabaseReference myRef = database.getReference("Foods");
+//
+//            for(Food q : aController.getFood()) {
+//                Log.v("MainActivity", "Name: " + q.getName() + " Life: " + q.getLife());
+////                myRef.push().setValue(q);
+//            }
+//        for(Food q : aController.getFood())
+//            Log.v("MainActivity","OnStart Name: " + q.getName() + "OnStart Shelf Life: " + q.getLife());
     }
 
     private void readQuestionDataFB() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Food");
+        DatabaseReference myRef = database.getReference("Foods");
 
         // Get Global Controller Class object
         final Controller aController = (Controller) getApplicationContext();
@@ -161,10 +193,11 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                Log.d("MainActivity", "Number of" + dataSnapshot.getChildrenCount());
                 for(DataSnapshot ds : dataSnapshot.getChildren() ){
                     Food f = ds.getValue(Food.class);
                     aController.addFood(f);
-                    Log.d("MainActivity", "Food Name: " + f.getName() + " Shelf Life: " + f.getLife());
+                    Log.d("MainActivity", "onDataChange Food Name: " + f.getName() + "OnDataChange Shelf Life: " + f.getLife());
                 }
             }
 
