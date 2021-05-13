@@ -26,12 +26,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
+//CANCEL A NOTIF
+//https://stackoverflow.com/questions/2665634/how-to-clear-a-notification-in-android#:~:text=Use%20the%20following%20code%20to,cancel(NOTIFICATION_ID)%3B
 public class MainActivity extends AppCompatActivity {
     //Variables for Notifications
     private NotificationManagerCompat notificationManager;
-    private EditText editTextTitle;
-    private EditText editTextMessage;
+
 
 
     @Override
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         //assign notification variables with context from Notification ManagerCompat
         notificationManager = NotificationManagerCompat.from(this);
+
 
         // editTextTitle = findViewById((R.id.edit_text_title));
         // editTextMessage = findViewById(R.id.edit_text_message);
@@ -109,13 +110,12 @@ public class MainActivity extends AppCompatActivity {
 
     //Create and send notification through notification channel 1 on click of the corresponding button. Should show up as a circle thing
     public void sendOnChannel1(View v) {
-        String title = editTextTitle.getText().toString();
-        String message = editTextMessage.getText().toString();
 
-        Notification notification = new NotificationCompat.Builder(this, "notifications")
+
+        Notification notification = new NotificationCompat.Builder(this, Controller.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle(title)
-                .setContentText(message)
+                .setContentTitle("hi")
+                .setContentText("hi2")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
@@ -124,13 +124,12 @@ public class MainActivity extends AppCompatActivity {
     }
     //Create and send notification through notification channel 2 on click of the corresponding button. Should show up as a grass thing
     public void sendOnChannel2(View v){
-        String title = editTextTitle.getText().toString();
-        String message = editTextMessage.getText().toString();
+
 
         Notification notification = new NotificationCompat.Builder(this, NotifChannels.CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_baseline_no_food_24)
-                .setContentTitle(title)
-                .setContentText(message)
+                .setContentTitle("hi")
+                .setContentText("hi2")
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .build();
 

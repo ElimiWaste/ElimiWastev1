@@ -49,6 +49,19 @@
             android:inputType="date" />
 
         <Button
+            android:id="@+id/addDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Click to enter date of purchase" />
+
+        <TextView
+            android:id="@+id/seeDate"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="dateText"
+            android:textAlignment="center" />
+
+        <Button
             android:id="@+id/addEntry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

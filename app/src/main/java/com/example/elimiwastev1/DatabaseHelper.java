@@ -4,11 +4,13 @@ import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 // import androidx.annotation.Nullable;
+//https://stackoverflow.com/questions/18097748/how-to-get-row-count-in-sqlite-using-android
 // TODO: Add one more date field 
 
 
@@ -80,19 +82,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor data = db.rawQuery(query, null);
         return data;
-
     }
 
-    public Cursor getItemName(int id) {
+    public Cursor getItemName(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + COL2 + " FROM " + TABLE_NAME +
                 " WHERE " + COL1 + " = '" + id + "'";
         return db.rawQuery(query, null);
     }
-    public int getRows() {
+    public Cursor getItemDate(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int query = Integer.parseInt("SELECT " + "COUNT(*)" + "FROM" + TABLE_NAME);
-        return query;
+        String query = "SELECT " + COL3 + " FROM " + TABLE_NAME +
+                " WHERE " + COL1 + " = '" + id + "'";
+        return db.rawQuery(query, null);
+    }
+    public long getRows() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME);
+        db.close();
+        return count;
     }
 
     public void updateName(String newName, int id, String oldName){

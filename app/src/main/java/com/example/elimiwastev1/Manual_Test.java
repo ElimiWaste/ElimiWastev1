@@ -3,6 +3,7 @@ package com.example.elimiwastev1;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -66,15 +69,17 @@ public class Manual_Test extends AppCompatActivity {
     Button currentDateItem;
     Button btnView;
     ArrayList<String> addArray = new ArrayList<String>();
-    //@SuppressLint("StaticFieldLeak")
-    public static EditText txt;
-    //@SuppressLint("StaticFieldLeak")
-    public static EditText date;
+    public EditText txt;
+    public EditText date;
     ListView groceryList;
     PopupWindow newWin;
     int index;
     ArrayAdapter<String> adapter;
 
+    TextView dateView;
+    Button dateEnter;
+    Calendar calendar;
+    DatePickerDialog datepicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +97,35 @@ public class Manual_Test extends AppCompatActivity {
         currentDateItem = (Button) findViewById(R.id.addWithDate);
         btnView = (Button) findViewById(R.id.viewContent);
 
+        dateView = (TextView)findViewById((R.id.seeDate));
+        dateEnter = (Button) findViewById((R.id.addDate));
+
         btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Manual_Test.this, ViewContent.class);
                 startActivity(intent);
             }
+        });
+
+        dateEnter.setOnClickListener(new View.OnClickListener(){
+           @Override
+           public void onClick(View view){
+               calendar = Calendar.getInstance();
+               int day = calendar.get(Calendar.DAY_OF_MONTH);
+               int month = calendar.get(Calendar.MONTH);
+               int year = calendar.get(Calendar.YEAR);
+
+               datepicker = new DatePickerDialog(Manual_Test.this, new DatePickerDialog.OnDateSetListener() {
+                   @Override
+                   public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
+                        dateView.setText(mDayOfMonth + "/" + mMonth + "/" + mYear);
+                   }
+               },year, month, day);
+               datepicker.show();
+
+
+           }
         });
 
         addUserEntry.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +186,6 @@ public class Manual_Test extends AppCompatActivity {
 
             Toast.makeText(Manual_Test.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
             //Will send out a notification with a wait time determined by variable long waitTime
-
             Intent intent = new Intent(Manual_Test.this, ReminderBroadcast.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
@@ -166,7 +193,7 @@ public class Manual_Test extends AppCompatActivity {
 
             long timeOfEnter = System.currentTimeMillis();
 
-            long waitTime = 1000 * (1);
+            long waitTime = 1000 * (0);
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
                     timeOfEnter + waitTime,
@@ -176,7 +203,6 @@ public class Manual_Test extends AppCompatActivity {
                     .setSmallIcon(R.drawable.ic_one)
                     .setContentTitle(txt.getText().toString() + " expires soon!")
                     .setContentText("Your item will expire on " + date.getText().toString())
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                     .build();
 
