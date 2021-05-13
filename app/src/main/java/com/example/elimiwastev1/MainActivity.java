@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        readQuestionDataFB();
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navBar = findViewById(R.id.navBar);
@@ -150,34 +149,5 @@ public class MainActivity extends AppCompatActivity {
 //            Log.v("MainActivity","OnStart Name: " + q.getName() + "OnStart Shelf Life: " + q.getLife());
     }
 
-    private void readQuestionDataFB() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Foods");
-
-        // Get Global Controller Class object
-        final Controller aController = (Controller) getApplicationContext();
-
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Log.d("MainActivity", "Number of" + dataSnapshot.getChildrenCount());
-                for(DataSnapshot ds : dataSnapshot.getChildren() ){
-                    Food f = ds.getValue(Food.class);
-                    aController.addFood(f);
-                    Log.d("MainActivity", "onDataChange Food Name: " + f.getName() + "OnDataChange Shelf Life: " + f.getLife());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("MainActivity", "Failed to read value.", error.toException());
-            }
-        });
-
-    }
 
 }
