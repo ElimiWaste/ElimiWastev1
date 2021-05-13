@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -94,13 +95,44 @@ public class NoteDetailActivity  extends AppCompatActivity {
             deleteButton.setVisibility(View.INVISIBLE);
         }
     }
-
+    public int convertDate(String shelfLife){
+        shelfLife = shelfLife.toUpperCase();
+        Log.d("albatross", shelfLife);
+        int convertedLife = 0;
+        if(shelfLife.contains("YEAR")){
+            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
+            Log.d("albatross1", cleanShelfLife);
+            convertedLife = 365 * Integer.parseInt(cleanShelfLife);
+        }
+        else if(shelfLife.contains("MONTH")){
+            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
+            Log.d("albatross2", cleanShelfLife);
+            convertedLife = 30 * Integer.parseInt(cleanShelfLife);
+        }
+        else if(shelfLife.contains("WEEK")){
+            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
+            Log.d("albatross3", cleanShelfLife);
+            convertedLife = 7 * Integer.parseInt(cleanShelfLife);
+        }
+        else if(shelfLife.contains("DAY")){
+            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
+            Log.d("albatross4", cleanShelfLife);
+            convertedLife = Integer.parseInt(cleanShelfLife);
+        }
+        else if(shelfLife.contains("INDEFINITELY")){
+            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
+            convertedLife = 999999999;
+        }
+        return convertedLife;
+    }
     public void saveNote(View view)
     {
         DatabaseHelper sqLiteManager = DatabaseHelper.instanceOfDatabase(this);
         String title = String.valueOf(titleEditText.getText());
         String desc = String.valueOf(descEditText.getText());
 
+
+        //boolean insertData = userEntryDB.addData(name, currentDate);
         if(selectedNote == null)
         {
             int id = Note.noteArrayList.size();
@@ -108,6 +140,24 @@ public class NoteDetailActivity  extends AppCompatActivity {
             Note.noteArrayList.add(newNote);
             sqLiteManager.addNoteToDatabase(newNote);
 
+            String date;
+            int shelfLife = 7;
+                //String nameEntered = txt.getText().toString();
+                String dateEntered = dateView.getText().toString();
+
+                final Controller aController = (Controller) getApplicationContext();
+                ArrayList<Food> firebaseFoods = aController.getFood();
+                for(int i = 0; i < firebaseFoods.size(); i++){
+                    if(newNote.getTitle().equals(firebaseFoods.get(i).getName())){
+                        date = firebaseFoods.get(i).getLife();
+                        shelfLife = convertDate(date);
+                        Log.d("Barney1", "ShelfLife of: " + shelfLife);
+                        break;
+                    }
+                    else{
+                        shelfLife = 7;
+                    }
+                }
             Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
             //Will send out a notification with a wait time determined by variable long waitTime
             Intent intent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);

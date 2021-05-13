@@ -31,6 +31,7 @@ public class Controller extends Application {
     public static final String CHANNEL_1_ID = "notifications";
     public static final String CHANNEL_2_ID = "notifications2";
 
+
     @Override
     public void onCreate() {
         super.onCreate();

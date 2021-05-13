@@ -60,7 +60,6 @@
 ////Currently working on the popup feature for editing and deleting text!
 ////Additionally, there are errors in using the showPopup class
 //
-////Update
 //public class Manual_Test extends AppCompatActivity {
 //    //For notifications
 //
@@ -109,21 +108,21 @@
 //            }
 //        });
 //
-//        dateEnter.setOnClickListener(new View.OnClickListener() {
+//        dateEnter.setOnClickListener(new View.OnClickListener(){
 //            @Override
-//            public void onClick(View view) {
+//            public void onClick(View view){
 //                calendar = Calendar.getInstance();
 //                day = calendar.get(Calendar.DAY_OF_MONTH);
 //                month = calendar.get(Calendar.MONTH);
 //                year = calendar.get(Calendar.YEAR);
-//                Log.d("tag", "message" + dateView.getText().toString());
+//                Log.d("tag", "message: " + dateView.getText().toString());
 //
 //                datepicker = new DatePickerDialog(Manual_Test.this, new DatePickerDialog.OnDateSetListener() {
 //                    @Override
 //                    public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
 //                        dateView.setText(mDayOfMonth + "/" + mMonth + "/" + mYear);
 //                    }
-//                }, year, month, day);
+//                },year, month, day);
 //                datepicker.show();
 //
 //
@@ -137,10 +136,12 @@
 //                String getDate = dateView.getText().toString();
 //
 //                if ((getInput.length() != 0) && (getDate.length() != 0) && !getDate.contains("l")) {
-//                    //AddData(getInput, getDate);
+//                    AddData(getInput, getDate);
 //                    txt.setText("");
 //                    dateView.setText("");
-//                } else {
+//                }
+//
+//                else{
 //                    Toast.makeText(Manual_Test.this, "You must put in a food item name and date!", Toast.LENGTH_LONG).show();
 //                }
 //
@@ -180,26 +181,26 @@
 //    }
 //    public int convertDate(String shelfLife){
 //        shelfLife = shelfLife.toUpperCase();
-//        Log.d("albatross", shelfLife);
+//        Log.d("ShelfLife", shelfLife);
 //        int convertedLife = 0;
 //        if(shelfLife.contains("YEAR")){
 //            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
-//            Log.d("albatross1", cleanShelfLife);
+//            Log.d("ShelfLife2", cleanShelfLife);
 //            convertedLife = 365 * Integer.parseInt(cleanShelfLife);
 //        }
 //        else if(shelfLife.contains("MONTH")){
 //            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
-//            Log.d("albatross2", cleanShelfLife);
+//            Log.d("ShelfLife3", cleanShelfLife);
 //            convertedLife = 30 * Integer.parseInt(cleanShelfLife);
 //        }
 //        else if(shelfLife.contains("WEEK")){
 //            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
-//            Log.d("albatross3", cleanShelfLife);
+//            Log.d("ShelfLife3", cleanShelfLife);
 //            convertedLife = 7 * Integer.parseInt(cleanShelfLife);
 //        }
 //        else if(shelfLife.contains("DAY")){
 //            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
-//            Log.d("albatross4", cleanShelfLife);
+//            Log.d("ShelfLife4", cleanShelfLife);
 //            convertedLife = Integer.parseInt(cleanShelfLife);
 //        }
 //        else if(shelfLife.contains("INDEFINITELY")){
@@ -222,7 +223,7 @@
 //                if(nameEntered.equals(firebaseFoods.get(i).getName())){
 //                    date = firebaseFoods.get(i).getLife();
 //                    shelfLife = convertDate(date);
-//                    Log.d("Barney1", "ShelfLife of: " + shelfLife);
+//                    Log.d("tag1", "ShelfLife of: " + shelfLife);
 //                    break;
 //                }
 //                else{
@@ -240,9 +241,8 @@
 //            AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 //
 //            long timeOfEnter = System.currentTimeMillis();
-//            Log.d("Barney2", "ShelfLife of: " + shelfLife);
-//            long waitTime = shelfLife/3 * 1000;
-//                    ;
+//            Log.d("tag2", "ShelfLife of: " + shelfLife);
+//            long waitTime = 1000* 10;
 //            //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
 //            AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
 //                    timeOfEnter + waitTime,
@@ -278,7 +278,7 @@
 //    }
 //
 //
-//    }
+//}
 //
 //   /*  if (getInput == null || date.getText().toString() == null || txt.getText().toString() == null || getInput.trim().equals("")) {
 //                Toast.makeText(getBaseContext(), "Empty Input", Toast.LENGTH_LONG).show();
@@ -296,8 +296,8 @@
 //        return index;
 //    } */
 //
-//    //TODO: Find a way to store data to test for editing and deleting
-//    //Method does not work completely, there is an error, it crashes
+////TODO: Find a way to store data to test for editing and deleting
+////Method does not work completely, there is an error, it crashes
 //  /*  public void showPopup(String currentItem, int itemIndex) {
 //        LayoutInflater newInflate = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 //        View edDelBox = newInflate.inflate(R.layout.edit_delete_box, null);
@@ -340,7 +340,7 @@
 //
 //
 //
-//  //Experimenting with other tutorial, doesn't work as expected, kept for future reference to have two column list
+////Experimenting with other tutorial, doesn't work as expected, kept for future reference to have two column list
 //
 //   /* EditText itemName, itemDate;
 //    Button save;

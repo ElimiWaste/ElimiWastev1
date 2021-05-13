@@ -18,12 +18,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 // import androidx.annotation.Nullable;
-// TODO: Add one more date field
+//https://stackoverflow.com/questions/18097748/how-to-get-row-count-in-sqlite-using-android
+// TODO: Add one more date field 
 
 // Update
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper databaseHelper;
-    private static final String TAG = "DatabaseHelper";
+
+//    public static final String DATABASE_NAME = "userEntry.db";
+//    public static final String TABLE_NAME = "userEntry_table";
+//    public static final String COL1 = "ID";
+//    public static final String COL2 = "NAME";
+//    public static final String COL3 = "DATE ";
+//    private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "NoteDB";
     private static final int DATABASE_VERSION = 1;
@@ -167,7 +174,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
 
     }
-
     public int getIdFromClassName(String className){
         String query = "SELECT ID" +
                 " FROM " + ID_FIELD +
@@ -178,15 +184,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return query2;
     }
-
-    public Cursor getItemName(int id) {
+    public Cursor getItemName(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + TITLE_FIELD + " FROM " + TABLE_NAME +
                 " WHERE " + ID_FIELD + " = '" + id + "'";
         return db.rawQuery(query, null);
     }
-
-
+    public Cursor getItemDate(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + DESC_FIELD + " FROM " + TABLE_NAME +
+                " WHERE " + ID_FIELD + " = '" + id + "'";
+        return db.rawQuery(query, null);
+    }
     public long getRows() {
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME);
@@ -236,12 +245,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return dateFormat.format(date);
     }
 
-    public Cursor getItemDate(String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + DESC_FIELD + " FROM " + TABLE_NAME +
-                " WHERE " + ID_FIELD + " = '" + id + "'";
-        return db.rawQuery(query, null);
-    }
 
     private Date getDateFromString(String string)
     {
@@ -253,13 +256,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         {
             return null;
         }
-    }
-
-    public Cursor getItemName(String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + TITLE_FIELD + " FROM " + TABLE_NAME +
-                " WHERE " + ID_FIELD + " = '" + id + "'";
-        return db.rawQuery(query, null);
     }
 
 }

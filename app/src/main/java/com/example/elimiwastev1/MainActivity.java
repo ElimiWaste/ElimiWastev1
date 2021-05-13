@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 //        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 //
 //        // Get Global Controller Class object
-//        final Controller aController = (Controller) getApplicationContext();
+//       final Controller aController = (Controller) getApplicationContext();
 //
 //        String line = "";
 //        try {

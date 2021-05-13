@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.util.ArrayList;
 
 
 public class ReminderBroadcast extends BroadcastReceiver{
@@ -19,6 +20,8 @@ public class ReminderBroadcast extends BroadcastReceiver{
     Cursor cursorName;
     Cursor cursorDate;
     int rows;
+    //final Controller aController = (Controller) getApplicationContext();
+
     //private NotificationManagerCompat notificationManager;
     @Override
     //Sends out the notification
