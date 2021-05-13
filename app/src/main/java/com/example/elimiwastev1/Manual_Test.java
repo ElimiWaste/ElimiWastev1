@@ -97,7 +97,7 @@ public class Manual_Test extends AppCompatActivity {
         currentDateItem = (Button) findViewById(R.id.addWithDate);
         btnView = (Button) findViewById(R.id.viewContent);
 
-        dateView = (TextView)findViewById((R.id.seeDate));
+        dateView = (TextView) findViewById((R.id.seeDate));
         dateEnter = (Button) findViewById((R.id.addDate));
 
         btnView.setOnClickListener(new View.OnClickListener() {
@@ -108,25 +108,25 @@ public class Manual_Test extends AppCompatActivity {
             }
         });
 
-        dateEnter.setOnClickListener(new View.OnClickListener(){
-           @Override
-           public void onClick(View view){
+        dateEnter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 calendar = Calendar.getInstance();
                 day = calendar.get(Calendar.DAY_OF_MONTH);
                 month = calendar.get(Calendar.MONTH);
                 year = calendar.get(Calendar.YEAR);
-               Log.d("tag", "message" +dateView.getText().toString());
+                Log.d("tag", "message" + dateView.getText().toString());
 
-               datepicker = new DatePickerDialog(Manual_Test.this, new DatePickerDialog.OnDateSetListener() {
-                   @Override
-                   public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
+                datepicker = new DatePickerDialog(Manual_Test.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
                         dateView.setText(mDayOfMonth + "/" + mMonth + "/" + mYear);
-                   }
-               },year, month, day);
-               datepicker.show();
+                    }
+                }, year, month, day);
+                datepicker.show();
 
 
-           }
+            }
         });
 
         addUserEntry.setOnClickListener(new View.OnClickListener() {
@@ -136,12 +136,10 @@ public class Manual_Test extends AppCompatActivity {
                 String getDate = dateView.getText().toString();
 
                 if ((getInput.length() != 0) && (getDate.length() != 0) && !getDate.contains("l")) {
-                    AddData(getInput, getDate);
+                    //AddData(getInput, getDate);
                     txt.setText("");
                     dateView.setText("");
-                }
-
-                else{
+                } else {
                     Toast.makeText(Manual_Test.this, "You must put in a food item name and date!", Toast.LENGTH_LONG).show();
                 }
 
@@ -179,9 +177,10 @@ public class Manual_Test extends AppCompatActivity {
         startActivityForResult(intent, itemIndex);
 
     }
+}
 
-    public void AddData(String name, String currentDate) {
-        boolean insertData = userEntryDB.addData(name, currentDate);
+  /*  public void AddData(String name, String currentDate) {
+        boolean insertData = userEntryDB.updateNoteInDB(name, currentDate);
 
         if(insertData == true) {
             String dateEntered = dateView.getText().toString();
@@ -335,6 +334,7 @@ public class Manual_Test extends AppCompatActivity {
         });
 
     }
+*/
 
 
 
@@ -343,5 +343,4 @@ public class Manual_Test extends AppCompatActivity {
 
 
 
-} */
 
