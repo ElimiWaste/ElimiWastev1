@@ -22,4 +22,5 @@
     <string name="click_for_notification">Click for notification</string>
     <string name="click_for_manual_entry" />
     <string name="click_for_manual">Click for Manual</string>
+    <string name="click_above_to_enter_date">Click above to enter date</string>
 </resources>

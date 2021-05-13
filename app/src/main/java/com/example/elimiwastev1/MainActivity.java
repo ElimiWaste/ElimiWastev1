@@ -106,35 +106,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
-
-
-    //Create and send notification through notification channel 1 on click of the corresponding button. Should show up as a circle thing
-    public void sendOnChannel1(View v) {
-
-
-        Notification notification = new NotificationCompat.Builder(this, Controller.CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle("hi")
-                .setContentText("hi2")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-
-        notificationManager.notify(1, notification);
-    }
-    //Create and send notification through notification channel 2 on click of the corresponding button. Should show up as a grass thing
-    public void sendOnChannel2(View v){
-
-
-        Notification notification = new NotificationCompat.Builder(this, NotifChannels.CHANNEL_2_ID)
-                .setSmallIcon(R.drawable.ic_baseline_no_food_24)
-                .setContentTitle("hi")
-                .setContentText("hi2")
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .build();
-
-        notificationManager.notify(2, notification);
-    }
 //    private void readQuestionDataFile() {
 //        // Reads trivia data from file
 //        InputStream is = getResources().openRawResource(R.raw.fooddatabase);

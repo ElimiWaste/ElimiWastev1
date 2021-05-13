@@ -62,7 +62,6 @@ import static com.example.elimiwastev1.R.layout.edit_delete_box;
 
 public class Manual_Test extends AppCompatActivity {
     //For notifications
-    private NotificationManagerCompat notificationManager;
 
     DatabaseHelper userEntryDB;
     Button addUserEntry;
@@ -70,7 +69,6 @@ public class Manual_Test extends AppCompatActivity {
     Button btnView;
     ArrayList<String> addArray = new ArrayList<String>();
     public EditText txt;
-    public EditText date;
     ListView groceryList;
     PopupWindow newWin;
     int index;
@@ -81,18 +79,20 @@ public class Manual_Test extends AppCompatActivity {
     Calendar calendar;
     DatePickerDialog datepicker;
 
+    int day;
+    int month;
+    int year;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment__manual);
 
-        notificationManager = NotificationManagerCompat.from(this);
-
         userEntryDB = new DatabaseHelper(this);
 
         txt = (EditText) findViewById(R.id.itemName);
         groceryList = (ListView) findViewById(R.id.itemList);
-        date = (EditText) findViewById(R.id.dateEntry);
         addUserEntry = (Button) findViewById(R.id.addEntry);
         currentDateItem = (Button) findViewById(R.id.addWithDate);
         btnView = (Button) findViewById(R.id.viewContent);
@@ -111,10 +111,11 @@ public class Manual_Test extends AppCompatActivity {
         dateEnter.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View view){
-               calendar = Calendar.getInstance();
-               int day = calendar.get(Calendar.DAY_OF_MONTH);
-               int month = calendar.get(Calendar.MONTH);
-               int year = calendar.get(Calendar.YEAR);
+                calendar = Calendar.getInstance();
+                day = calendar.get(Calendar.DAY_OF_MONTH);
+                month = calendar.get(Calendar.MONTH);
+                year = calendar.get(Calendar.YEAR);
+               Log.d("tag", "message" +dateView.getText().toString());
 
                datepicker = new DatePickerDialog(Manual_Test.this, new DatePickerDialog.OnDateSetListener() {
                    @Override
@@ -132,16 +133,16 @@ public class Manual_Test extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String getInput = txt.getText().toString();
-                String getDate = date.getText().toString();
+                String getDate = dateView.getText().toString();
 
-                if ((getInput.length() != 0) && (getDate.length() != 0)) {
+                if ((getInput.length() != 0) && (getDate.length() != 0) && !getDate.contains("l")) {
                     AddData(getInput, getDate);
                     txt.setText("");
-                    date.setText("");
+                    dateView.setText("");
                 }
 
                 else{
-                    Toast.makeText(Manual_Test.this, "You must put in a food item name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Manual_Test.this, "You must put in a food item name and date!", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -153,7 +154,7 @@ public class Manual_Test extends AppCompatActivity {
         currentDateItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String in = txt.getText().toString() + " " + date.getText().toString();
+                String in = txt.getText().toString();
                 Date currentTime = Calendar.getInstance().getTime();
                 addArray.add(in + " " + currentTime);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(Manual_Test.this, android.R.layout.simple_list_item_1, addArray);
@@ -183,7 +184,7 @@ public class Manual_Test extends AppCompatActivity {
         boolean insertData = userEntryDB.addData(name, currentDate);
 
         if(insertData == true) {
-
+            String dateEntered = dateView.getText().toString();
             Toast.makeText(Manual_Test.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
             //Will send out a notification with a wait time determined by variable long waitTime
             Intent intent = new Intent(Manual_Test.this, ReminderBroadcast.class);
@@ -198,15 +199,6 @@ public class Manual_Test extends AppCompatActivity {
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
                     timeOfEnter + waitTime,
                     pendingIntent);
-
-          /*  Notification notification = new NotificationCompat.Builder(Manual_Test.this, "notifications")
-                    .setSmallIcon(R.drawable.ic_one)
-                    .setContentTitle(txt.getText().toString() + " expires soon!")
-                    .setContentText("Your item will expire on " + date.getText().toString())
-                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                    .build();
-
-            notificationManager.notify(1, notification);*/
         }
         else {
             Toast.makeText(Manual_Test.this, "Aww Shucks! :(.", Toast.LENGTH_LONG).show();
@@ -218,14 +210,14 @@ public class Manual_Test extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String getInput = txt.getText().toString();
-                String getDate = date.getText().toString();
+                String getDate = dateView.getText().toString();
 
                 boolean insertData = userEntryDB.addData(getInput, getDate);
 
-                if (insertData == true) {
+                if (insertData) {
                     Toast.makeText(Manual_Test.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
                 }
-                else if (getInput == null || getDate == null){
+                else if (getInput.equals("") || getDate.equals("")|| getDate.equals("Click above to enter date")){
                     Toast.makeText(Manual_Test.this, "Aww Shucks! :(.", Toast.LENGTH_LONG).show();
                 }
                 else {
