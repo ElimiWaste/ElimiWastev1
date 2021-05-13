@@ -13,7 +13,7 @@
         android:textStyle="bold"
         android:maxLines="1"
         android:textColor="@color/darkGray"
-        android:textSize="25sp"/>
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/cellDesc"

@@ -20,6 +20,7 @@ import java.util.ArrayList;
  * Use the {@link fragment_Manual#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class  fragment_Manual extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match

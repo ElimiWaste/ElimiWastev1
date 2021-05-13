@@ -60,6 +60,7 @@ import static com.example.elimiwastev1.R.layout.edit_delete_box;
 //Currently working on the popup feature for editing and deleting text!
 //Additionally, there are errors in using the showPopup class
 
+//Update
 public class Manual_Test extends AppCompatActivity {
     //For notifications
 

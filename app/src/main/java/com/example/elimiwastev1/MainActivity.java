@@ -28,6 +28,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 //CANCEL A NOTIF
 //https://stackoverflow.com/questions/2665634/how-to-clear-a-notification-in-android#:~:text=Use%20the%20following%20code%20to,cancel(NOTIFICATION_ID)%3B
+
+//Update
+
 public class MainActivity extends AppCompatActivity {
     //Variables for Notifications
     private NotificationManagerCompat notificationManager;

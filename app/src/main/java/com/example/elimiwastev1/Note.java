@@ -4,6 +4,8 @@ package com.example.elimiwastev1;
 import java.util.ArrayList;
 import java.util.Date;
 
+
+//Update
 public class Note {
 
         public static ArrayList<Note> noteArrayList = new ArrayList<>();

@@ -8,6 +8,8 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+//Update
 public class Manual_V2 extends AppCompatActivity {
 
     private ListView noteListView;

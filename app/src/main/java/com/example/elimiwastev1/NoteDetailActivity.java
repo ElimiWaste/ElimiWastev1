@@ -3,22 +3,37 @@ package com.example.elimiwastev1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 
+//Update
 public class NoteDetailActivity  extends AppCompatActivity {
 
     private EditText titleEditText, descEditText;
     private Button deleteButton;
     private Note selectedNote;
+
+    TextView dateView;
+    Button dateEnter;
+    Calendar calendar;
+    DatePickerDialog datepicker;
+
+    int day;
+    int month;
+    int year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,7 +42,33 @@ public class NoteDetailActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_note_detail);
         initWidgets();
         checkForEditNote();
+
+        dateView = (TextView)findViewById((R.id.seeDate));
+        dateEnter = (Button) findViewById((R.id.addDate));
+
+        dateEnter.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                calendar = Calendar.getInstance();
+                day = calendar.get(Calendar.DAY_OF_MONTH);
+                month = calendar.get(Calendar.MONTH);
+                year = calendar.get(Calendar.YEAR);
+                Log.d("tag", "message" +dateView.getText().toString());
+
+                datepicker = new DatePickerDialog(NoteDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
+                        dateView.setText(mDayOfMonth + "/" + mMonth + "/" + mYear);
+                    }
+                },year, month, day);
+                datepicker.show();
+
+
+            }
+        });
+
     }
+
 
     private void initWidgets()
     {
@@ -82,6 +123,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
                     timeOfEnter + waitTime,
                     pendingIntent);
         }
+
         else
         {
             selectedNote.setTitle(title);

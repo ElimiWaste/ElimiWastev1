@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 
+//Update
 public class NoteAdapter extends ArrayAdapter<Note> {
 
     public NoteAdapter(Context context, List<Note> notes)
