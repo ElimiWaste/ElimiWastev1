@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Manual_V2 extends AppCompatActivity {
 
     private ListView noteListView;
+    static boolean loadDB = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,7 +21,9 @@ public class Manual_V2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manual_v2_activity);
         initWidgets();
-        loadFromDBToMemory();
+        if (loadDB){
+            loadFromDBToMemory();    // The SQL data is loaded here
+        }
         setNoteAdapter();
         setOnClickListener();
     }
@@ -35,6 +38,7 @@ public class Manual_V2 extends AppCompatActivity {
     {
         DatabaseHelper sqLiteManager = DatabaseHelper.instanceOfDatabase(this);
         sqLiteManager.populateNoteListArray();
+        loadDB = false;
     }
 
     private void setNoteAdapter()
@@ -70,6 +74,6 @@ public class Manual_V2 extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
-        setNoteAdapter();
+//        setNoteAdapter();
     }
 }

@@ -35,12 +35,11 @@ public class MainActivity extends AppCompatActivity {
     //Variables for Notifications
     private NotificationManagerCompat notificationManager;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         BottomNavigationView navBar = findViewById(R.id.navBar);
         navBar.setOnNavigationItemSelectedListener(navListener);
@@ -78,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent test = new Intent(MainActivity.this, Manual_V2.class);
-                startActivity(test);
+               Intent test = new Intent(MainActivity.this, Manual_V2.class);
+               startActivity(test);
             }
         });
 
