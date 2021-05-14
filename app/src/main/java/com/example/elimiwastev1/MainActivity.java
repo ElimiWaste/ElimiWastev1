@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        BottomNavigationView navBar = findViewById(R.id.navBar);
-        navBar.setOnNavigationItemSelectedListener(navListener);
+//
+//        BottomNavigationView navBar = findViewById(R.id.navBar);
+//        navBar.setOnNavigationItemSelectedListener(navListener);
 
         //NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
         //NavigationUI.setupWithNavController(navBar,navController);
@@ -84,29 +84,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                    Fragment selectedFragment = null;
-
-                    switch (item.getItemId()) {
-                        case R.id.fragment_Home:
-                            selectedFragment = new fragment_Home();
-                            break;
-                        case R.id.fragment_Manual:
-                            selectedFragment = new fragment_Manual();
-                            break;
-                        case R.id.fragment_OCR:
-                            selectedFragment = new fragment_OCR();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, selectedFragment).commit();
-
-                    return true;
-                }
-            };
+//    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+//            new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                @Override
+//                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                    Fragment selectedFragment = null;
+//
+//                    switch (item.getItemId()) {
+//                        case R.id.fragment_Home:
+//                            selectedFragment = new fragment_Home();
+//                            break;
+//                        case R.id.fragment_Manual:
+//                            selectedFragment = new fragment_Manual();
+//                            break;
+//                        case R.id.fragment_OCR:
+//                            selectedFragment = new fragment_OCR();
+//                            break;
+//                    }
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, selectedFragment).commit();
+//
+//                    return true;
+//                }
+//            };
 //    private void readQuestionDataFile() {
 //        // Reads trivia data from file
 //        InputStream is = getResources().openRawResource(R.raw.fooddatabase);
