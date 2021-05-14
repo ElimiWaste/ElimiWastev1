@@ -20,7 +20,7 @@ import java.util.Date;
 // import androidx.annotation.Nullable;
 // TODO: Add one more date field
 
-// Update
+// Update 2
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper databaseHelper;
     private static final String TAG = "DatabaseHelper";
