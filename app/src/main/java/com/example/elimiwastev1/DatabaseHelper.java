@@ -186,13 +186,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getItemName(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + TITLE_FIELD + " FROM " + TABLE_NAME +
-                " WHERE " + ID_FIELD + " = '" + id + "'";
+                " WHERE " + COUNTER + " = '" + id + "'";
         return db.rawQuery(query, null);
     }
     public Cursor getItemDate(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + DESC_FIELD + " FROM " + TABLE_NAME +
-                " WHERE " + ID_FIELD + " = '" + id + "'";
+                " WHERE " + COUNTER + " = '" + id + "'";
         return db.rawQuery(query, null);
     }
     public long getRows() {

@@ -76,13 +76,14 @@ public class Controller extends Application {
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_1_ID,
                     "ReminderChannel",
-                    NotificationManager.IMPORTANCE_HIGH
+                    NotificationManager.IMPORTANCE_DEFAULT
             );
             channel1.setDescription("This is the first channel");
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_2_ID,
                     "ReminderChannel2",
-                    NotificationManager.IMPORTANCE_HIGH
+                    NotificationManager.IMPORTANCE_LOW
+
             );
             channel2.setDescription("This is the second channel");
 

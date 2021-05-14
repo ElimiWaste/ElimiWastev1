@@ -62,7 +62,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 datepicker = new DatePickerDialog(NoteDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
-                        dateView.setText(mDayOfMonth + "/" + mMonth + "/" + mYear);
+                        dateView.setText(mMonth + "/" + mDayOfMonth + "/" + mYear);
                     }
                 },year, month, day);
                 datepicker.show();
@@ -77,7 +77,6 @@ public class NoteDetailActivity  extends AppCompatActivity {
         titleEditText = findViewById(R.id.titleEditText);
         descEditText = findViewById(R.id.descriptionEditText);
         deleteButton = findViewById(R.id.deleteNoteButton);
-
     }
 
     private void checkForEditNote()
@@ -144,21 +143,23 @@ public class NoteDetailActivity  extends AppCompatActivity {
             Note.noteArrayList.add(newNote);
             sqLiteManager.addNoteToDatabase(newNote);
 
-            String date;
-            int theLife = 7;
+            int theLife = 0;
                 String nameEntered = titleEditText.getText().toString();
                 String dateEntered = dateView.getText().toString();
                 Log.d("Barney0.5", "ShelfLife of: " + dateEntered);
+
+                DateConvert convertMonthDay = new DateConvert(day, month, year);
                 //converts enter date to milliseconds since the UNIX epoch
                 //https://currentmillis.com/
-                long dateEnteredMillis = 1000 * 60 * 60 * 24 *((day) + 30 * (month) + 365L * (year-1970) +  (year-1970)/4);
+                long dateEnteredMillis = 1000 * 60 * 60 *(24 *(convertMonthDay.monthConverter() + 365 * (year-1970))+16);
+
                 Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
 
             final Controller aController = (Controller) getApplicationContext();
                 ArrayList<Food> firebaseFoods = aController.getFood();
                 for(int i = 0; i < firebaseFoods.size(); i++){
                     if(nameEntered.equalsIgnoreCase(firebaseFoods.get(i).getName())){
-                        date = firebaseFoods.get(i).getLife();
+                        String date = firebaseFoods.get(i).getLife();
                         theLife = convertDate(date);
                         break;
                     }
@@ -183,20 +184,21 @@ public class NoteDetailActivity  extends AppCompatActivity {
                     0,
                     pendingIntent);
 
-
             //TWO DAYS BEFORE NOTIFICATION
-//            Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
-//            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent2, 0);
-//
-//            long theLifeL2 = 86400000L * (theLife-2);
-//            long sum2 = dateEnteredMillis + theLifeL2;
-//            Log.d("Barney0.6", "sum2: " + sum2);
-//
-//
-//            //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
-//            AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-//                    0,
-//                    pendingIntent2);
+            Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
+            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent2, 0);
+
+            long theLifeL2 = 86400000L * (theLife-2);
+            long sum2 = dateEnteredMillis + theLifeL2;
+            Log.d("Barney0.6", "sum2: " + sum2);
+
+            //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
+            AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
+                    0,
+                    pendingIntent2);
+            //dateView.setText("Your food expires in " + theLife + " days");
+            // selectedNote.setDescription();
+
         }
 
         else

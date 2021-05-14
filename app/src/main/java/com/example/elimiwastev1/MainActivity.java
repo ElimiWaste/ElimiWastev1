@@ -33,7 +33,6 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
     //Variables for Notifications
-    private NotificationManagerCompat notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
         //AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).build();
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        //assign notification variables with context from Notification ManagerCompat
-        notificationManager = NotificationManagerCompat.from(this);
-
-
-        // editTextTitle = findViewById((R.id.edit_text_title));
-        // editTextMessage = findViewById(R.id.edit_text_message);
 //        // Write a message to the database
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        DatabaseReference myRef = database.getReference("message");
@@ -81,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                startActivity(test);
             }
         });
-
     }
 
 //    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
