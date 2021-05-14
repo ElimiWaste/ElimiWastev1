@@ -3,6 +3,8 @@ package com.example.elimiwastev1;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -77,11 +79,10 @@ public class Controller extends Application {
                     NotificationManager.IMPORTANCE_HIGH
             );
             channel1.setDescription("This is the first channel");
-            //channel. (add default settings to channel)
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_2_ID,
                     "ReminderChannel2",
-                    NotificationManager.IMPORTANCE_LOW
+                    NotificationManager.IMPORTANCE_HIGH
             );
             channel2.setDescription("This is the second channel");
 

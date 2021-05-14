@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+import static java.lang.Long.MAX_VALUE;
+
 //Update
 public class NoteDetailActivity  extends AppCompatActivity {
 
@@ -44,7 +47,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
         initWidgets();
         checkForEditNote();
 
-        dateView = (TextView)findViewById((R.id.seeDate));
+        dateView = (TextView)findViewById((R.id.descriptionEditText));
         dateEnter = (Button) findViewById((R.id.addDate));
 
         dateEnter.setOnClickListener(new View.OnClickListener(){
@@ -54,7 +57,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 day = calendar.get(Calendar.DAY_OF_MONTH);
                 month = calendar.get(Calendar.MONTH);
                 year = calendar.get(Calendar.YEAR);
-                Log.d("tag", "message" +dateView.getText().toString());
+                Log.d("tag", "message" + dateView.getText().toString());
 
                 datepicker = new DatePickerDialog(NoteDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -63,8 +66,6 @@ public class NoteDetailActivity  extends AppCompatActivity {
                     }
                 },year, month, day);
                 datepicker.show();
-
-
             }
         });
 
@@ -76,6 +77,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
         titleEditText = findViewById(R.id.titleEditText);
         descEditText = findViewById(R.id.descriptionEditText);
         deleteButton = findViewById(R.id.deleteNoteButton);
+
     }
 
     private void checkForEditNote()
@@ -84,6 +86,8 @@ public class NoteDetailActivity  extends AppCompatActivity {
 
         int passedNoteID = previousIntent.getIntExtra(Note.NOTE_EDIT_EXTRA, -1);
         selectedNote = Note.getNoteForID(passedNoteID);
+
+//&& descEditText.getText().toString().contains("/")
 
         if (selectedNote != null)
         {
@@ -95,6 +99,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
             deleteButton.setVisibility(View.INVISIBLE);
         }
     }
+
     public int convertDate(String shelfLife){
         shelfLife = shelfLife.toUpperCase();
         Log.d("albatross", shelfLife);
@@ -120,8 +125,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
             convertedLife = Integer.parseInt(cleanShelfLife);
         }
         else if(shelfLife.contains("INDEFINITELY")){
-            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
-            convertedLife = 999999999;
+            convertedLife = 0;
         }
         return convertedLife;
     }
@@ -141,37 +145,58 @@ public class NoteDetailActivity  extends AppCompatActivity {
             sqLiteManager.addNoteToDatabase(newNote);
 
             String date;
-            int shelfLife = 7;
-                //String nameEntered = txt.getText().toString();
+            int theLife = 7;
+                String nameEntered = titleEditText.getText().toString();
                 String dateEntered = dateView.getText().toString();
+                Log.d("Barney0.5", "ShelfLife of: " + dateEntered);
+                //converts enter date to milliseconds since the UNIX epoch
+                //https://currentmillis.com/
+                long dateEnteredMillis = 1000 * 60 * 60 * 24 *((day) + 30 * (month) + 365L * (year-1970) +  (year-1970)/4);
+                Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
 
-                final Controller aController = (Controller) getApplicationContext();
+            final Controller aController = (Controller) getApplicationContext();
                 ArrayList<Food> firebaseFoods = aController.getFood();
                 for(int i = 0; i < firebaseFoods.size(); i++){
-                    if(newNote.getTitle().equals(firebaseFoods.get(i).getName())){
+                    if(nameEntered.equalsIgnoreCase(firebaseFoods.get(i).getName())){
                         date = firebaseFoods.get(i).getLife();
-                        shelfLife = convertDate(date);
-                        Log.d("Barney1", "ShelfLife of: " + shelfLife);
+                        theLife = convertDate(date);
                         break;
                     }
                     else{
-                        shelfLife = 7;
+                        theLife = 0;
                     }
                 }
             Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
-            //Will send out a notification with a wait time determined by variable long waitTime
+            //HALFLIFE NOTIFICATION
+            //Will send out a notification with a wait time determined by variable long waitTime.
             Intent intent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
             AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-            long timeOfEnter = System.currentTimeMillis();
-
-            long waitTime = 1000 * (0);
+            long theLifeL = 86400000L * theLife;
+            Log.d("Barney3", "theLifeL: " + theLifeL);
+            Log.d("Barney3", "current time: " + System.currentTimeMillis());
+            long sum = dateEnteredMillis+ theLifeL/2;
+            Log.d("Barney0.6", "sum: " + sum);
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                    timeOfEnter + waitTime,
+                    0,
                     pendingIntent);
+
+
+            //TWO DAYS BEFORE NOTIFICATION
+//            Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
+//            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent2, 0);
+//
+//            long theLifeL2 = 86400000L * (theLife-2);
+//            long sum2 = dateEnteredMillis + theLifeL2;
+//            Log.d("Barney0.6", "sum2: " + sum2);
+//
+//
+//            //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
+//            AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
+//                    0,
+//                    pendingIntent2);
         }
 
         else

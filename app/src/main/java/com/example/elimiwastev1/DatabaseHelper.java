@@ -170,8 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT " + ID_FIELD + " FROM " + TABLE_NAME +
                 " WHERE " + TITLE_FIELD + " = '" + name + "'";
 
-        Cursor data = db.rawQuery(query, null);
-        return data;
+        return db.rawQuery(query, null);
 
     }
     public int getIdFromClassName(String className){
