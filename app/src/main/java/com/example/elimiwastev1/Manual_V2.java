@@ -24,6 +24,7 @@ public class Manual_V2 extends AppCompatActivity {
         if (loadDB){
             loadFromDBToMemory();    // The SQL data is loaded here
         }
+
         setNoteAdapter();
         setOnClickListener();
     }
@@ -31,6 +32,7 @@ public class Manual_V2 extends AppCompatActivity {
 
     private void initWidgets()
     {
+
         noteListView = findViewById(R.id.noteListView);
     }
 

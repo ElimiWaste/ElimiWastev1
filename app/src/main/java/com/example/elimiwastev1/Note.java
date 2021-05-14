@@ -14,21 +14,26 @@ public class Note {
         private int id;
         private String title;
         private String description;
+        private String expiration; //added
         private Date deleted;
 
-    public Note(int id, String title, String description, Date deleted)
+
+    public Note(int id, String title, String description, String expiration, Date deleted) //added String expiration
         {
             this.id = id;
             this.title = title;
             this.description = description;
+            this.expiration = expiration; //added
             this.deleted = deleted;
+
         }
 
-    public Note(int id, String title, String description)
+    public Note(int id, String title, String description, String expiration)
         {
             this.id = id;
             this.title = title;
             this.description = description;
+            this.expiration = expiration; // added expiration
             deleted = null;
         }
 
@@ -42,6 +47,7 @@ public class Note {
 
             return null;
         }
+
 
         public static ArrayList<Note> nonDeletedNotes()
         {
@@ -57,6 +63,7 @@ public class Note {
 
         public int getId()
         {
+
             return id;
         }
 
@@ -67,16 +74,19 @@ public class Note {
 
         public String getTitle()
         {
+
             return title;
         }
 
         public void setTitle(String title)
         {
+
             this.title = title;
         }
 
         public String getDescription()
         {
+
             return description;
         }
 
@@ -85,8 +95,22 @@ public class Note {
             this.description = description;
         }
 
+        //added
+        public String getExpiration() {
+
+            return expiration;
+        }
+
+        //added
+        public void setExpiration(String expiration) {
+
+             this.expiration = expiration;
+
+        }
+
         public Date getDeleted()
         {
+
             return deleted;
         }
 

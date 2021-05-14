@@ -26,10 +26,11 @@ import static java.lang.Long.MAX_VALUE;
 //Update
 public class NoteDetailActivity  extends AppCompatActivity {
 
-    private EditText titleEditText, descEditText;
+    private EditText titleEditText;
     private Button deleteButton;
     private Note selectedNote;
 
+    //Purchase Date Vars
     TextView dateView;
     Button dateEnter;
     Calendar calendar;
@@ -38,6 +39,16 @@ public class NoteDetailActivity  extends AppCompatActivity {
     int day;
     int month;
     int year;
+
+    //Expiration Date Vars
+    TextView dateView2;
+    Button dateEnter2;
+    Calendar calendar2;
+    DatePickerDialog datepicker2;
+
+    int day2;
+    int month2;
+    int year2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -69,14 +80,42 @@ public class NoteDetailActivity  extends AppCompatActivity {
             }
         });
 
+        //added lines below
+        dateView2 = (TextView)findViewById((R.id.exEditText));
+        dateEnter2 = (Button) findViewById((R.id.addEx));
+
+        //added lines 88- 105
+        dateEnter2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                calendar2 = Calendar.getInstance();
+                day2 = calendar2.get(Calendar.DAY_OF_MONTH);
+                month2 = calendar2.get(Calendar.MONTH);
+                year2 = calendar2.get(Calendar.YEAR);
+                Log.d("tag", "message" + dateView2.getText().toString());
+
+                datepicker2 = new DatePickerDialog(NoteDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
+                        dateView2.setText(mDayOfMonth + "/" + mMonth + "/" + mYear);
+                    }
+                },year2, month2, day2);
+                datepicker2.show();
+            }
+        });
+
+
+
     }
 
 
     private void initWidgets()
     {
         titleEditText = findViewById(R.id.titleEditText);
-        descEditText = findViewById(R.id.descriptionEditText);
+        dateView = findViewById((R.id.descriptionEditText)); //??? - edited but not sure
+        dateView2 = (TextView)findViewById((R.id.exEditText)); // added
         deleteButton = findViewById(R.id.deleteNoteButton);
+
 
     }
 
@@ -92,7 +131,8 @@ public class NoteDetailActivity  extends AppCompatActivity {
         if (selectedNote != null)
         {
             titleEditText.setText(selectedNote.getTitle());
-            descEditText.setText(selectedNote.getDescription());
+            dateView.setText(selectedNote.getDescription()); //Changed
+            dateView2.setText(selectedNote.getExpiration()); //added
         }
         else
         {
@@ -129,18 +169,20 @@ public class NoteDetailActivity  extends AppCompatActivity {
         }
         return convertedLife;
     }
+
     public void saveNote(View view)
     {
         DatabaseHelper sqLiteManager = DatabaseHelper.instanceOfDatabase(this);
         String title = String.valueOf(titleEditText.getText());
-        String desc = String.valueOf(descEditText.getText());
+        String desc = String.valueOf(dateView.getText()); //changed
+        String expiry = String.valueOf(dateView2.getText()); //added
 
 
         //boolean insertData = userEntryDB.addData(name, currentDate);
         if(selectedNote == null)
         {
             int id = Note.noteArrayList.size();
-            Note newNote = new Note(id, title, desc);
+            Note newNote = new Note(id, title, desc, expiry);
             Note.noteArrayList.add(newNote);
             sqLiteManager.addNoteToDatabase(newNote);
 
@@ -148,6 +190,8 @@ public class NoteDetailActivity  extends AppCompatActivity {
             int theLife = 7;
                 String nameEntered = titleEditText.getText().toString();
                 String dateEntered = dateView.getText().toString();
+                String expiryEntered = dateView2.getText().toString(); //added
+
                 Log.d("Barney0.5", "ShelfLife of: " + dateEntered);
                 //converts enter date to milliseconds since the UNIX epoch
                 //https://currentmillis.com/
@@ -203,6 +247,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
         {
             selectedNote.setTitle(title);
             selectedNote.setDescription(desc);
+            selectedNote.setExpiration(expiry); //added
             sqLiteManager.updateNoteInDB(selectedNote);
         }
 

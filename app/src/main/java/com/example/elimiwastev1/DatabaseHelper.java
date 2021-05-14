@@ -18,19 +18,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 // import androidx.annotation.Nullable;
-//https://stackoverflow.com/questions/18097748/how-to-get-row-count-in-sqlite-using-android
-// TODO: Add one more date field 
+// TODO: Add one more date field
 
 // Update
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper databaseHelper;
-
-//    public static final String DATABASE_NAME = "userEntry.db";
-//    public static final String TABLE_NAME = "userEntry_table";
-//    public static final String COL1 = "ID";
-//    public static final String COL2 = "NAME";
-//    public static final String COL3 = "DATE ";
-//    private static final String TAG = "DatabaseHelper";
+    private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "NoteDB";
     private static final int DATABASE_VERSION = 1;
@@ -41,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String ID_FIELD = "ID";
     public static final String TITLE_FIELD = "NAME";
     public static final String DESC_FIELD = "DATE ";
+    public static final String EX_FIELD = "EXPIRATION "; //added
     private static final String DELETED_FIELD = "deleted";
 
 
@@ -53,8 +47,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public static DatabaseHelper instanceOfDatabase(Context context){
-        if(databaseHelper == null)
+    public static DatabaseHelper instanceOfDatabase(Context context) {
+        if (databaseHelper == null)
             databaseHelper = new DatabaseHelper(context);
 
         return databaseHelper;
@@ -80,8 +74,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 .append(" TEXT, ")
                 .append(DESC_FIELD)
                 .append(" TEXT, ")
+                .append(EX_FIELD)
+                .append(" TEXT, ")
                 .append(DELETED_FIELD)
                 .append(" TEXT)");
+
 
         databaseHelper.execSQL(sql.toString());
 
@@ -125,28 +122,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     } */
 
 
-    public void addNoteToDatabase(Note note)
-    {
+    public void addNoteToDatabase(Note note) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID_FIELD, note.getId());
         contentValues.put(TITLE_FIELD, note.getTitle());
         contentValues.put(DESC_FIELD, note.getDescription());
+        contentValues.put(EX_FIELD, note.getExpiration()); //Added
         contentValues.put(DELETED_FIELD, getStringFromDate(note.getDeleted()));
 
         sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
+
     }
-
-
-
 
 
     /**
      * Returns all the data from database
+     *
      * @return
      */
-    public Cursor getData(){
+    public Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
@@ -154,7 +150,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor showData(){
+    public Cursor showData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return data;
@@ -162,6 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Returns the ID that corresponds to the input String name
+     *
      * @param name, user defined name String
      * @return
      */
@@ -173,7 +170,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
 
     }
-    public int getIdFromClassName(String className){
+
+    public int getIdFromClassName(String className) {
         String query = "SELECT ID" +
                 " FROM " + ID_FIELD +
                 " WHERE " + TITLE_FIELD + " = '" + className + "'";
@@ -183,18 +181,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return query2;
     }
-    public Cursor getItemName(String id) {
+
+    public Cursor getItemName(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + TITLE_FIELD + " FROM " + TABLE_NAME +
                 " WHERE " + ID_FIELD + " = '" + id + "'";
         return db.rawQuery(query, null);
     }
-    public Cursor getItemDate(String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + DESC_FIELD + " FROM " + TABLE_NAME +
-                " WHERE " + ID_FIELD + " = '" + id + "'";
-        return db.rawQuery(query, null);
-    }
+
+
     public long getRows() {
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME);
@@ -202,22 +197,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    public void populateNoteListArray()
-    {
+    public void populateNoteListArray() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null))
-        {
-            if(result.getCount() != 0)
-            {
-                while (result.moveToNext())
-                {
+        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null)) {
+            if (result.getCount() != 0) {
+                while (result.moveToNext()) {
                     int id = result.getInt(1);
                     String title = result.getString(2);
                     String desc = result.getString(3);
-                    String stringDeleted = result.getString(4);
+                    String expiry = result.getString(4); // added
+                    String stringDeleted = result.getString(5);
                     Date deleted = getDateFromString(stringDeleted);
-                    Note note = new Note(id,title,desc,deleted);
+                    Note note = new Note(id, title, desc, expiry, deleted); //added
                     Note.noteArrayList.add(note);
                 }
             }
@@ -225,37 +217,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void updateNoteInDB(Note note)
-    {
+    public void updateNoteInDB(Note note) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID_FIELD, note.getId());
         contentValues.put(TITLE_FIELD, note.getTitle());
         contentValues.put(DESC_FIELD, note.getDescription());
+        contentValues.put(EX_FIELD, note.getExpiration()); //added
         contentValues.put(DELETED_FIELD, getStringFromDate(note.getDeleted()));
 
         sqLiteDatabase.update(TABLE_NAME, contentValues, ID_FIELD + " =? ", new String[]{String.valueOf(note.getId())});
     }
 
-    private String getStringFromDate(Date date)
-    {
-        if(date == null)
+    private String getStringFromDate(Date date) {
+        if (date == null)
             return null;
         return dateFormat.format(date);
     }
 
+    public Cursor getItemDate(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + DESC_FIELD + " FROM " + TABLE_NAME +
+                " WHERE " + ID_FIELD + " = '" + id + "'";
+        return db.rawQuery(query, null);
+    }
 
-    private Date getDateFromString(String string)
-    {
-        try
-        {
+
+    private Date getDateFromString(String string) {
+        try {
             return dateFormat.parse(string);
-        }
-        catch (ParseException | NullPointerException e)
-        {
+        } catch (ParseException | NullPointerException e) {
             return null;
         }
     }
+
+    public Cursor getItemName(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + TITLE_FIELD + " FROM " + TABLE_NAME +
+                " WHERE " + ID_FIELD + " = '" + id + "'";
+        return db.rawQuery(query, null);
+    }
+
+
+    //added Getter Method
+    public Cursor getExpiration(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT " + EX_FIELD + " FROM " + TABLE_NAME +
+                " WHERE " + ID_FIELD + " = '" + id + "'";
+        return db.rawQuery(query, null);
+    }
+
 
 }
 

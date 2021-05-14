@@ -19,6 +19,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
     public NoteAdapter(Context context, List<Note> notes)
     {
+
         super(context, 0, notes);
     }
 
@@ -32,9 +33,11 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
         TextView title = convertView.findViewById(R.id.cellTitle);
         TextView desc = convertView.findViewById(R.id.cellDesc);
+        TextView expiry = convertView.findViewById(R.id.exDate); //added
 
         title.setText(note.getTitle());
         desc.setText(note.getDescription());
+        expiry.setText(note.getExpiration()); //added
 
         return convertView;
     }
