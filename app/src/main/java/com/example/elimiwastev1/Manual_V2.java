@@ -15,7 +15,6 @@ public class Manual_V2 extends AppCompatActivity {
     private ListView noteListView;
     static boolean loadDB = true;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -23,8 +22,9 @@ public class Manual_V2 extends AppCompatActivity {
         setContentView(R.layout.manual_v2_activity);
         initWidgets();
         if (loadDB){
-           loadFromDBToMemory();    // The SQL data is loaded here
-         }
+            loadFromDBToMemory();    // The SQL data is loaded here
+        }
+
         setNoteAdapter();
         setOnClickListener();
     }

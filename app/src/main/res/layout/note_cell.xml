@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:padding="15dp"
-    android:layout_height="100dp">
+    android:layout_height="130dp">
 
     <TextView
         android:id="@+id/cellTitle"
@@ -19,10 +19,21 @@
         android:id="@+id/cellDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description"
-        android:maxLines="1"
         android:layout_marginTop="5dp"
+        android:maxLines="1"
+        android:text="Description"
         android:textColor="@color/darkGray"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/exDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        android:text="Expiration Date"
+        android:textColor="@color/teal_200"
+        android:textSize="20sp" />
+
 
 </LinearLayout>
