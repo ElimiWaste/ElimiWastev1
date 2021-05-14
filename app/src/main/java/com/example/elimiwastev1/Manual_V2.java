@@ -74,6 +74,6 @@ public class Manual_V2 extends AppCompatActivity {
     protected void onResume()
     {
         super.onResume();
-//        setNoteAdapter();
+        setNoteAdapter();
     }
 }
