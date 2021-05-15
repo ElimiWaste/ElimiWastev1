@@ -173,7 +173,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
             convertedLife = Integer.parseInt(cleanShelfLife);
         }
         else if(shelfLife.contains("INDEFINITELY")){
-            convertedLife = 0;
+            convertedLife = 9999999;
         }
         return convertedLife;
     }
@@ -200,13 +200,13 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 String expiryEntered = dateView2.getText().toString(); //added
 
                 Log.d("Barney0.5", "ShelfLife of: " + dateEntered);
-            Log.d("Barney0.5", "ShelfLife of: " + theDay);
-            Log.d("Barney0.5", "ShelfLife of: " + theMonth);
-            Log.d("Barney0.5", "ShelfLife of: " + theYear);
+            Log.d("Barney0.5", "theDay of: " + theDay);
+            Log.d("Barney0.5", "theMonth of: " + theMonth);
+            Log.d("Barney0.5", "theYear of: " + theYear);
             DateConvert convertYearMonthDay = new DateConvert(theDay, theMonth, theYear);
-                //converts enter date to milliseconds since the UNIX epoch at 12
+                //converts enter date at 12 noon to milliseconds since the UNIX epoch
                 //https://currentmillis.com/
-                long dateEnteredMillis = 86400000L * (convertYearMonthDay.monthAndDayConverter() + convertYearMonthDay.yearConverter());
+                long dateEnteredMillis = + 43200000L + 86400000L * (convertYearMonthDay.monthAndDayConverter() + convertYearMonthDay.yearConverter());
 
                 Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
 
@@ -233,7 +233,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
             Log.d("Barney0.6", "sum: " + sum);
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                    0,
+                    sum,
                     pendingIntent);
 
             //TWO DAYS BEFORE NOTIFICATION
@@ -246,7 +246,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
 
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                    0,
+                    sum2,
                     pendingIntent2);
             //dateView.setText("Your food expires in " + theLife + " days");
             // selectedNote.setDescription();

@@ -49,6 +49,6 @@ public class ReminderBroadcast2 extends BroadcastReceiver{
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setAutoCancel(true)
                 .build();
-        notificationManager.notify((int) database.getRows(), notification);
+        notificationManager.notify(2147483647 - (int) database.getRows(), notification);
     }
 }

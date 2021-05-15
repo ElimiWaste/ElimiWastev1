@@ -46,8 +46,8 @@ public class ReminderBroadcast extends BroadcastReceiver{
 
         Notification notification = new NotificationCompat.Builder(context, Controller.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle("Your food item " + name + " is halfway expired!: ")
-                .setContentText("Check on " + name + " that was purchased on " + date)
+                .setContentTitle("Your food item \"" + name + "\" is halfway expired!: ")
+                .setContentText("Check on \"" + name + "\" that was purchased on \"" + date + "\"")
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)

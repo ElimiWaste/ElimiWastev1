@@ -17,8 +17,7 @@ public class DateConvert {
     }
 
     /**
-     * converts the month and day into days passed
-     *
+     * converts the month and day into days passed since the beginning of the current year
      * @return the months and day in terms of days
      */
     public int monthAndDayConverter() {
@@ -53,6 +52,10 @@ public class DateConvert {
         return sumMonthDays + theDay - 1;
     }
 
+    /**
+     * Converts the number of years since 1970 to the number of days since 1970 on the level of years
+     * @return int years that have passed since 1970 in days
+     */
     public int yearConverter() {
         int yearDay = 0;
         int sumYearDays = 0;
