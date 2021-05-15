@@ -47,18 +47,17 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/titleEditText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:hint="Enter your food"
+        android:hint="Enter Your Food"
         android:maxLines="1"
         android:textAlignment="center"
         android:textColor="@color/darkGray"
         android:textSize="25sp" />
-
 
     <Button
         android:id="@+id/addDate"
