@@ -9,5 +9,18 @@
     <color name="white">#FFFFFFFF</color>
     <color name="darkGray">#2C2F33</color>
     <color name="red">#F00</color>
+    <!-- New Colors-->
+    <color name="keyLime">#D9ED92</color>
+    <color name="yellowGreenCrayola">#B5E48C</color>
+    <color name="grannySmithApple">#99D98C</color>
+    <color name="oceanGreen">#52B69A</color>
+    <color name="keppel">#52B69A</color>
+    <color name="viridianGreen">#34A0A4</color>
+    <color name="blueMunsell">#168AAD</color>
+    <color name="celadonBlue">#1A759F</color>
+    <color name="lapisLazuli">#1E6091</color>
+    <color name="yaleBlue">#184E77</color>
+
+
 </resources>
 
