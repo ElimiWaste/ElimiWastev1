@@ -4,22 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grannySmithApple"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
 
     <FrameLayout
         android:id="@+id/frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="60dp"
-        android:text="@string/click_for_manual"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="400dp"
+            android:text="@string/click_for_entry"
+            android:textColor="@color/yaleBlue"
+            android:textSize="20sp"
+            app:backgroundTint="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+    </FrameLayout>
 
 
     <!--   <androidx.fragment.app.FragmentContainerView
@@ -34,7 +60,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:navGraph = "@navigation/nav_home" />
                 -->
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
