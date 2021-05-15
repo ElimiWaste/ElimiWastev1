@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
@@ -221,7 +222,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
             //HALFLIFE NOTIFICATION
             //Will send out a notification with a wait time determined by variable long waitTime.
             Intent intent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
             AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
@@ -230,7 +231,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
 
             //TWO DAYS BEFORE NOTIFICATION
             Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
-            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent2, 0);
+            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, id, intent2, 0);
 
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
@@ -245,15 +246,27 @@ public class NoteDetailActivity  extends AppCompatActivity {
             selectedNote.setExpiration(expiry); //added
             sqLiteManager.updateNoteInDB(selectedNote);
         }
-
         finish();
     }
 
     public void deleteNote(View view)
     {
+        int id = selectedNote.getId();
+
+        Intent myIntent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(NoteDetailActivity.this, id, myIntent,0);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+
+        Intent myIntent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
+        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(NoteDetailActivity.this, id, myIntent2,0);
+        AlarmManager alarmManager2 = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager2.cancel(pendingIntent2);
+
         selectedNote.setDeleted(new Date());
-       DatabaseHelper sqLiteManager = DatabaseHelper.instanceOfDatabase(this);
+        DatabaseHelper sqLiteManager = DatabaseHelper.instanceOfDatabase(this);
         sqLiteManager.updateNoteInDB(selectedNote);
+
         finish();
     }
 }
