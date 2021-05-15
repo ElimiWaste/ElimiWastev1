@@ -7,6 +7,11 @@ public class Food {
     public String name;
     public String life;
 
+    /**
+     * Constructor for the food class with two parameters: food name and shelf life
+     * @param name is defined as the food name
+     * @param life is defined as the shelf life of an item
+     */
     public Food(String name, String life) {
         this.name = name;
         this.life = life;
