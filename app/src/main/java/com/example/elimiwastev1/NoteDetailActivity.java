@@ -55,6 +55,9 @@ public class NoteDetailActivity  extends AppCompatActivity {
     int day2;
     int month2;
     int year2;
+    int theDayExpire;
+    int theMonthExpire;
+    int theYearExpire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -95,11 +98,9 @@ public class NoteDetailActivity  extends AppCompatActivity {
             }
         });
 
-        //added lines below
         dateView2 = (TextView)findViewById((R.id.exEditText));
         dateEnter2 = (Button) findViewById((R.id.addEx));
 
-        //added lines 88- 105
         dateEnter2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -112,7 +113,10 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 datepicker2 = new DatePickerDialog(NoteDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
-                        dateView2.setText(mMonth + "/" + mDayOfMonth + "/" + mYear);
+                        theDayExpire = mDayOfMonth;
+                        theMonthExpire = mMonth+1;
+                        theYearExpire = mYear;
+                        dateView2.setText(mMonth + 1 + "/" + mDayOfMonth + "/" + mYear);
                     }
                 },year2, month2, day2);
                 datepicker2.show();
@@ -166,35 +170,6 @@ public class NoteDetailActivity  extends AppCompatActivity {
         }
     }
 
-    public int convertDate(String shelfLife){
-        shelfLife = shelfLife.toUpperCase();
-        Log.d("albatross", shelfLife);
-        int convertedLife = 0;
-        if(shelfLife.contains("YEAR")){
-            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
-            Log.d("albatross1", cleanShelfLife);
-            convertedLife = 365 * Integer.parseInt(cleanShelfLife);
-        }
-        else if(shelfLife.contains("MONTH")){
-            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
-            Log.d("albatross2", cleanShelfLife);
-            convertedLife = 30 * Integer.parseInt(cleanShelfLife);
-        }
-        else if(shelfLife.contains("WEEK")){
-            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
-            Log.d("albatross3", cleanShelfLife);
-            convertedLife = 7 * Integer.parseInt(cleanShelfLife);
-        }
-        else if(shelfLife.contains("DAY")){
-            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
-            Log.d("albatross4", cleanShelfLife);
-            convertedLife = Integer.parseInt(cleanShelfLife);
-        }
-        else if(shelfLife.contains("INDEFINITELY")){
-            convertedLife = 9999999;
-        }
-        return convertedLife;
-    }
 
     public void saveNote(View view)
     {
@@ -202,7 +177,6 @@ public class NoteDetailActivity  extends AppCompatActivity {
         String title = String.valueOf(titleEditText.getText());
         String desc = String.valueOf(dateView.getText()); //changed
         String expiry = String.valueOf(dateView2.getText()); //added
-
 
         //boolean insertData = userEntryDB.addData(name, currentDate);
         if(selectedNote == null)
@@ -212,63 +186,56 @@ public class NoteDetailActivity  extends AppCompatActivity {
             Note.noteArrayList.add(newNote);
             sqLiteManager.addNoteToDatabase(newNote);
 
-            int theLife = 0;
-                String nameEntered = titleEditText.getText().toString();
-                String dateEntered = dateView.getText().toString();
-                String expiryEntered = dateView2.getText().toString(); //added
+            int theLife = -1;
+            String nameEntered = titleEditText.getText().toString();
+            String dateEntered = dateView.getText().toString();
+            String expiryEntered = dateView2.getText().toString(); //added
 
-                Log.d("Barney0.5", "ShelfLife of: " + dateEntered);
-            Log.d("Barney0.5", "theDay of: " + theDay);
-            Log.d("Barney0.5", "theMonth of: " + theMonth);
-            Log.d("Barney0.5", "theYear of: " + theYear);
-            DateConvert convertYearMonthDay = new DateConvert(theDay, theMonth, theYear);
-                //converts enter date at 12 noon to milliseconds since the UNIX epoch
-                //https://currentmillis.com/
-                long dateEnteredMillis = + 43200000L + 86400000L * (convertYearMonthDay.monthAndDayConverter() + convertYearMonthDay.yearConverter());
-
-                Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
-
+            DateConvert convertEnterDate = new DateConvert(theDay, theMonth, theYear);
+            DateConvert convertExpireDate = new DateConvert(theDayExpire, theMonthExpire, theYearExpire);
             final Controller aController = (Controller) getApplicationContext();
+
+            //converts enter date at 12 noon to milliseconds since the UNIX epoch
+            //https://currentmillis.com/
+            long dateEnteredMillis = 43200000L + 86400000L * (convertEnterDate.monthAndDayConverter() + convertEnterDate.yearConverter());
+            long dateExpireMillis = 43200000L + 86400000L * (convertExpireDate.monthAndDayConverter() + convertExpireDate.yearConverter());
+
+            Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
+            Log.d("Barney0.6", "dateExpireMillis of: " + dateExpireMillis);
+
             ArrayList<Food> firebaseFoods = aController.getFood();
             for(int i = 0; i < firebaseFoods.size(); i++){
                 if(nameEntered.equalsIgnoreCase(firebaseFoods.get(i).getName())){
-                    String date = firebaseFoods.get(i).getLife();
-                    theLife = convertDate(date);
+                    String foodAndDateFirebase = firebaseFoods.get(i).getLife();
+                    theLife = convertEnterDate.convertInputDate(foodAndDateFirebase);
                     break;
                 }
             }
+//            if(dateEntered.isEmpty() && expiryEntered.isEmpty()){
+//
+//            }
+//            if(theLife == -1){
+//                Toast.makeText(NoteDetailActivity.this, "Food entered not found in ", Toast.LENGTH_LONG).show();
+//            }
             Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
             //HALFLIFE NOTIFICATION
             //Will send out a notification with a wait time determined by variable long waitTime.
             Intent intent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-
             AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            long theLifeL = 86400000L * theLife;
-            Log.d("Barney3", "theLifeL: " + theLifeL);
-            Log.d("Barney3", "current time: " + System.currentTimeMillis());
-            long sum = dateEnteredMillis+ theLifeL/2;
-            Log.d("Barney0.6", "sum: " + sum);
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                    sum,
+                    NotificationsLogic.halfLifeNotif(theLife, dateEnteredMillis),
                     pendingIntent);
 
             //TWO DAYS BEFORE NOTIFICATION
             Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
             PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent2, 0);
 
-            long theLifeL2 = 86400000L * (theLife-2);
-            long sum2 = dateEnteredMillis + theLifeL2;
-            Log.d("Barney0.6", "sum2: " + sum2);
-
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                    sum2,
+                    NotificationsLogic.twoDayNotif(theLife, dateEnteredMillis),
                     pendingIntent2);
-            //dateView.setText("Your food expires in " + theLife + " days");
-            // selectedNote.setDescription();
-
         }
 
         else

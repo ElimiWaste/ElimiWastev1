@@ -72,4 +72,36 @@ public class DateConvert {
 
         return sumYearDays;
     }
+    public int convertInputDate(String shelfLife){
+        shelfLife = shelfLife.toUpperCase();
+        Log.d("albatross", shelfLife);
+        int convertedLife;
+        if(shelfLife.contains("YEAR")){
+            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
+            Log.d("albatross1", cleanShelfLife);
+            convertedLife = 365 * Integer.parseInt(cleanShelfLife);
+        }
+        else if(shelfLife.contains("MONTH")){
+            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
+            Log.d("albatross2", cleanShelfLife);
+            convertedLife = 30 * Integer.parseInt(cleanShelfLife);
+        }
+        else if(shelfLife.contains("WEEK")){
+            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
+            Log.d("albatross3", cleanShelfLife);
+            convertedLife = 7 * Integer.parseInt(cleanShelfLife);
+        }
+        else if(shelfLife.contains("DAY")){
+            String cleanShelfLife = shelfLife.replaceAll("\\D+",""); //remove non-digits
+            Log.d("albatross4", cleanShelfLife);
+            convertedLife = Integer.parseInt(cleanShelfLife);
+        }
+        else if(shelfLife.contains("INDEFINITELY")){
+            convertedLife = 9999999;
+        }
+        else{
+            convertedLife = 0;
+        }
+        return convertedLife;
+    }
 }
