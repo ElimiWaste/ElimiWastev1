@@ -72,6 +72,12 @@ public class DateConvert {
 
         return sumYearDays;
     }
+
+    /**
+     * Takes the raw data from firebase with the name and the shelflife together and cleans the data such that only the shelflife of the food is returned.
+     * @param shelfLife the firebase data with the name and shelf life of the food together
+     * @return the shelf life of the food converted into how ever many days it is
+     */
     public int convertInputDate(String shelfLife){
         shelfLife = shelfLife.toUpperCase();
         Log.d("albatross", shelfLife);

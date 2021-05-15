@@ -249,15 +249,21 @@ public class NoteDetailActivity  extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Deletes a food item along with the corresponding notification
+     * @param view
+     */
     public void deleteNote(View view)
     {
         int id = selectedNote.getId();
 
+        //Should delete the halfLife notification
         Intent myIntent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(NoteDetailActivity.this, id, myIntent,0);
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
 
+        //Should delete the two-days before notification
         Intent myIntent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
         PendingIntent pendingIntent2 = PendingIntent.getBroadcast(NoteDetailActivity.this, id, myIntent2,0);
         AlarmManager alarmManager2 = (AlarmManager)getSystemService(ALARM_SERVICE);
