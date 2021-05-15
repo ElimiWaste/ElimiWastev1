@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 
 //Update
@@ -24,11 +28,9 @@ public class Manual_V2 extends AppCompatActivity {
         if (loadDB){
             loadFromDBToMemory();    // The SQL data is loaded here
         }
-
         setNoteAdapter();
         setOnClickListener();
     }
-
 
     private void initWidgets()
     {

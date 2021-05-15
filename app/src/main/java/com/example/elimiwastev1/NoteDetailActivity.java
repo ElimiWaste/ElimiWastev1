@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -61,6 +63,11 @@ public class NoteDetailActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_note_detail);
         initWidgets();
         checkForEditNote();
+
+        final AutoCompleteTextView foodEntry = (AutoCompleteTextView)findViewById(R.id.titleEditText);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, autoListMaker());
+        foodEntry.setAdapter(adapter);
 
         dateView = (TextView)findViewById((R.id.descriptionEditText));
         dateEnter = (Button) findViewById((R.id.addDate));
@@ -114,6 +121,17 @@ public class NoteDetailActivity  extends AppCompatActivity {
 
 
 
+    }
+
+    private String[] autoListMaker(){
+        final Controller aController = (Controller) getApplicationContext();
+        ArrayList<Food> firebaseFoods = aController.getFood();
+        int size = firebaseFoods.size();
+        String[] foodList = new String[size];
+        for(int i = 0; i < firebaseFoods.size(); i++){
+            foodList[i] = firebaseFoods.get(i).getName();
+        }
+        return foodList;
     }
 
 
