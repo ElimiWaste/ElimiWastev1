@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ElimiWastev1">
-        <activity android:name=".Manual_V2">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,21 +19,21 @@
         </activity>
 
 
-<!--        <activity android:name=".ViewContent"-->
-<!--            android:parentActivityName=".Manual_Test"-->
-<!--            ></activity>-->
+        <!--        <activity android:name=".ViewContent"-->
+        <!--            android:parentActivityName=".Manual_Test"-->
+        <!--            ></activity>-->
 
-            <receiver android:name=".ReminderBroadcast"/>
-            <receiver android:name=".ReminderBroadcast2"/>
+        <receiver android:name=".ReminderBroadcast"/>
+        <receiver android:name=".ReminderBroadcast2"/>
 
         <activity
             android:name=".NoteDetailActivity"
             android:parentActivityName=".Manual_V2">
         </activity>
-<!--        <activity-->
-<!--&lt;!&ndash;            android:name=".Manual_V2"&ndash;&gt;-->
-<!--            android:parentActivityName=".MainActivity">-->
-<!--        </activity>-->
+        <activity
+            android:name=".Manual_V2"
+            android:parentActivityName=".MainActivity">
+        </activity>
 
 
     </application>
