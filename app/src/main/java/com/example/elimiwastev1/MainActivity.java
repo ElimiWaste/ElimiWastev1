@@ -12,8 +12,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -34,10 +38,31 @@ import java.io.InputStreamReader;
 public class MainActivity extends AppCompatActivity {
     //Variables for Notifications
 
+
+    //Variables for Animation
+    Animation topAnim, bottomAnim;
+    ImageView image;
+    Button button2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        //Animations
+        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
+        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
+
+        //Hooks
+        image = findViewById(R.id.imageView);
+        button2 = findViewById(R.id.button2);
+
+        image.setAnimation(topAnim);
+        button2.setAnimation(bottomAnim);
+
+
+
 
 //
 //        BottomNavigationView navBar = findViewById(R.id.navBar);
@@ -66,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setUpWithNavController(navController); */
 
-        Button button2 = findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

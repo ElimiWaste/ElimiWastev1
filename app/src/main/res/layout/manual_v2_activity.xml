@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,40 +8,51 @@
     android:layout_height="match_parent"
     tools:context=".Manual_V2">
 
+
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?actionBarSize"
         android:theme="?actionBarTheme"
-        android:background="@color/darkGray">
+        android:background="@color/yaleBlue">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NOTES"
+            android:text="Current Items"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textSize="35sp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:layout_gravity="center"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+"
-            android:textSize="35sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:layout_gravity="end"
-            android:onClick="newNote"/>
 
     </androidx.appcompat.widget.Toolbar>
 
     <ListView
         android:id="@+id/noteListView"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:paddingTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="3dp"
-        android:dividerHeight="3dp"
-        android:divider="@color/darkGray"/>
+        android:divider="@color/darkGray"
+        android:dividerHeight="3dp">
 
-</LinearLayout>
+    </ListView>
+
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/oceanGreen"
+        android:onClick="newNote"
+        android:text="+"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

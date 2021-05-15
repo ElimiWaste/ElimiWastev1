@@ -20,6 +20,8 @@
     <color name="celadonBlue">#1A759F</color>
     <color name="lapisLazuli">#1E6091</color>
     <color name="yaleBlue">#184E77</color>
+    <color name="transparent">#00000000</color>
+
 
 
 </resources>
