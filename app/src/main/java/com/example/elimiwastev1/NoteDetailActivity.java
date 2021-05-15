@@ -39,6 +39,10 @@ public class NoteDetailActivity  extends AppCompatActivity {
     int day;
     int month;
     int year;
+    int theDay;
+    int theMonth;
+    int theYear;
+
 
     //Expiration Date Vars
     TextView dateView2;
@@ -61,6 +65,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
         dateView = (TextView)findViewById((R.id.descriptionEditText));
         dateEnter = (Button) findViewById((R.id.addDate));
 
+
         dateEnter.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -73,7 +78,10 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 datepicker = new DatePickerDialog(NoteDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
-                        dateView.setText(mMonth + "/" + mDayOfMonth + "/" + mYear);
+                        theDay = mDayOfMonth;
+                        theMonth = mMonth+1;
+                        theYear = mYear;
+                        dateView.setText(mMonth + 1 + "/" + mDayOfMonth + "/" + mYear);
                     }
                 },year, month, day);
                 datepicker.show();
@@ -97,7 +105,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 datepicker2 = new DatePickerDialog(NoteDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
-                        dateView2.setText(mDayOfMonth + "/" + mMonth + "/" + mYear);
+                        dateView2.setText(mMonth + "/" + mDayOfMonth + "/" + mYear);
                     }
                 },year2, month2, day2);
                 datepicker2.show();
@@ -192,26 +200,25 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 String expiryEntered = dateView2.getText().toString(); //added
 
                 Log.d("Barney0.5", "ShelfLife of: " + dateEntered);
-
-                DateConvert convertMonthDay = new DateConvert(day, month, year);
-                //converts enter date to milliseconds since the UNIX epoch
+            Log.d("Barney0.5", "ShelfLife of: " + theDay);
+            Log.d("Barney0.5", "ShelfLife of: " + theMonth);
+            Log.d("Barney0.5", "ShelfLife of: " + theYear);
+            DateConvert convertYearMonthDay = new DateConvert(theDay, theMonth, theYear);
+                //converts enter date to milliseconds since the UNIX epoch at 12
                 //https://currentmillis.com/
-                long dateEnteredMillis = 1000 * 60 * 60 *(24 *(convertMonthDay.monthConverter() + 365 * (year-1970))+16);
+                long dateEnteredMillis = 86400000L * (convertYearMonthDay.monthAndDayConverter() + convertYearMonthDay.yearConverter());
 
                 Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
 
             final Controller aController = (Controller) getApplicationContext();
-                ArrayList<Food> firebaseFoods = aController.getFood();
-                for(int i = 0; i < firebaseFoods.size(); i++){
-                    if(nameEntered.equalsIgnoreCase(firebaseFoods.get(i).getName())){
-                        String date = firebaseFoods.get(i).getLife();
-                        theLife = convertDate(date);
-                        break;
-                    }
-                    else{
-                        theLife = 0;
-                    }
+            ArrayList<Food> firebaseFoods = aController.getFood();
+            for(int i = 0; i < firebaseFoods.size(); i++){
+                if(nameEntered.equalsIgnoreCase(firebaseFoods.get(i).getName())){
+                    String date = firebaseFoods.get(i).getLife();
+                    theLife = convertDate(date);
+                    break;
                 }
+            }
             Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
             //HALFLIFE NOTIFICATION
             //Will send out a notification with a wait time determined by variable long waitTime.

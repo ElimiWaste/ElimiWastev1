@@ -1,5 +1,7 @@
 package com.example.elimiwastev1;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,17 +16,16 @@ public class DateConvert {
         theYear = year;
     }
 
-    public int monthConverter() {
+    /**
+     * converts the month and day into days passed
+     *
+     * @return the months and day in terms of days
+     */
+    public int monthAndDayConverter() {
         int monthDay = 1;
         int sumMonthDays = 0;
-        for(int i = theMonth; i >= 1; i--) {
+        for (int i = theMonth-1; i >= 1; i--) {
             switch (i) {
-                case 2:
-                    if (((theYear % 4 == 0) && (theYear % 100 != 0)) || (theYear % 400 == 0))
-                        monthDay = 29;
-                    else
-                        monthDay = 28;
-                    break;
                 case 1:
                 case 3:
                 case 5:
@@ -40,10 +41,32 @@ public class DateConvert {
                 case 11:
                     monthDay = 30;
                     break;
+                case 2:
+                    if (((theYear % 4 == 0) && (theYear % 100 != 0)) || (theYear % 400 == 0))
+                        monthDay = 29;
+                    else
+                        monthDay = 28;
+                    break;
             }
             sumMonthDays += monthDay;
         }
-        return sumMonthDays + theDay;
+        return sumMonthDays + theDay - 1;
+    }
 
+    public int yearConverter() {
+        int yearDay = 0;
+        int sumYearDays = 0;
+        for (int i = theYear; i > 1970; i--) {
+            if (((i % 4 == 1) && (i % 100 != 1)) || (i % 400 == 1)) {
+                yearDay = 366;
+                sumYearDays += yearDay;
+
+            } else {
+                yearDay = 365;
+                sumYearDays += yearDay;
+            }
+        }
+
+        return sumYearDays;
     }
 }

@@ -180,7 +180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return query2;
     }
 
-    public Cursor getItemName(int id) {
+    public Cursor getItemName(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + TITLE_FIELD + " FROM " + TABLE_NAME +
                 " WHERE " + COUNTER + " = '" + id + "'";
