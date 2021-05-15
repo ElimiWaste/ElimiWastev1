@@ -13,86 +13,107 @@
         android:layout_height="wrap_content"
         android:minHeight="?actionBarSize"
         android:theme="?actionBarTheme"
-        android:background="@color/darkGray">
+        android:background="@color/yaleBlue">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DETAIL"
+            android:text="Enter Food Info"
+            android:fontFamily="sans-serif-condensed-medium"
             android:textSize="35sp"
             android:textColor="@color/white"
-            android:textStyle="bold"
             android:layout_gravity="center"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SAVE"
-            android:textSize="25sp"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/darkGray"
-            android:textStyle="bold"
-            android:layout_gravity="end"
-            android:onClick="saveNote"/>
 
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Food"
+        android:layout_gravity="start"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="12dp"
+        android:text="Food Name"
+        android:fontFamily="sans-serif-condensed-medium"
         android:textColor="@color/darkGray"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="20sp"
+         />
 
     <AutoCompleteTextView
         android:id="@+id/titleEditText"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="left"
         android:hint="Enter Your Food"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:maxLines="1"
-        android:textAlignment="center"
         android:textColor="@color/darkGray"
         android:textSize="25sp" />
+
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="12dp"
+        android:text="Add Purchase Date"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/darkGray"
+        android:textSize="20sp"
+        />
 
     <Button
         android:id="@+id/addDate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_height="75dp"
+        android:layout_gravity="left"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:backgroundTint="@color/white"
-        android:text="Click to enter date of purchase"
-        android:textColor="@color/black"
+        android:text="+"
+        android:textColor="@color/yaleBlue"
         android:textSize="25sp"
         android:textStyle="bold" />
-
 
     <TextView
         android:id="@+id/descriptionEditText"
         android:layout_width="300dp"
         android:layout_height="43dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="left"
         android:hint="Purchase Date"
         android:minLines="3"
-        android:textAlignment="center"
+        android:layout_marginLeft="12dp"
+        android:textAllCaps="false"
         android:textColor="@color/darkGray"
-        android:textSize="25sp" />
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="12dp"
+        android:text="Add Expiration Date"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/darkGray"
+        android:textSize="20sp"
+        />
 
     <Button
         android:id="@+id/addEx"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_height="75dp"
+        android:layout_gravity="left"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:backgroundTint="@color/white"
-        android:text="Click to enter expiration date"
-        android:textColor="@color/black"
+        android:text="+"
+        android:textAllCaps="false"
+        android:textColor="@color/yaleBlue"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -100,26 +121,39 @@
         android:id="@+id/exEditText"
         android:layout_width="300dp"
         android:layout_height="43dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="left"
         android:hint="Expiration Date"
         android:minLines="3"
-        android:textAlignment="center"
+        android:layout_marginLeft="12dp"
+        android:textAllCaps="false"
         android:textColor="@color/darkGray"
-        android:textSize="25sp" />
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="20sp" />
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Entry"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:backgroundTint="@color/oceanGreen"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:onClick="saveNote"/>
 
 
     <Button
         android:id="@+id/deleteNoteButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginTop="0dp"
+        android:backgroundTint="@color/red"
         android:onClick="deleteNote"
-        android:text="DELETE"
-        android:textColor="@color/red"
+        android:text="Delete Entry"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold" />
 

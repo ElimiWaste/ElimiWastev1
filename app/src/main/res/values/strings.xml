@@ -23,5 +23,5 @@
     <string name="click_for_manual_entry" />
     <string name="click_for_manual">Click for Manual</string>
     <string name="click_above_to_enter_date">Click above to enter date</string>
-    <string name="click_for_entry">Click to Enter Food Items</string>
+    <string name="click_for_entry">Click to Enter Food Items  ></string>
 </resources>
