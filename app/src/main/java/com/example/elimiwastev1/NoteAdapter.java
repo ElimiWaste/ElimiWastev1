@@ -54,7 +54,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         TextView label1 = convertView.findViewById(R.id.textView); // defines TextView object label1 as textView
         TextView label2 = convertView.findViewById(R.id.textView2); // defines TextView object label2 as textView2
 
-        //Setter methods to store user input in Note object
+        //Setter methods to store user input title, desc, and expiry in Note object
         title.setText(note.getTitle());
         desc.setText(note.getDescription());
         expiry.setText(note.getExpiration());
