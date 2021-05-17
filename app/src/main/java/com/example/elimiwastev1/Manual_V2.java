@@ -13,12 +13,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 
-//Update
+//Tutorial followed to create class: https://www.youtube.com/watch?v=4k1ZMpO9Zn0&t=884s
+
+/**
+ * This class stores and displays user-entered food items, their purchase date, and their expiration date as a ListView
+ */
 public class Manual_V2 extends AppCompatActivity {
 
-    private ListView noteListView;
-    static boolean loadDB = true;
 
+    private ListView noteListView; //ListView of item name, date, and expiration date
+    static boolean loadDB = true; //Boolean to check if database is loaded, set to true
+
+    /**
+     * onCreate method, sets ContentView to manual_v2_activity.xml
+     * initializes objects used in class
+     * loads the SQLite database from memory
+     * creates NoteAdapter object
+     * sets onItemClickListener for items in ListView
+     * @param savedInstanceState is the saved state of the activity, loaded during onCreate
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -32,11 +45,19 @@ public class Manual_V2 extends AppCompatActivity {
         setOnClickListener();
     }
 
+    /**
+     * initializes noteListView object from manual_v2_activity layout
+     */
     private void initWidgets()
     {
         noteListView = findViewById(R.id.noteListView);
     }
 
+    /**
+     * Gets instance of database from DatabaseHelper class
+     * populates ListView with items
+     * sets boolean loadDB to false
+     */
     private void loadFromDBToMemory()
     {
         DatabaseHelper sqLiteManager = DatabaseHelper.instanceOfDatabase(this);
@@ -44,6 +65,10 @@ public class Manual_V2 extends AppCompatActivity {
         loadDB = false;
     }
 
+
+    /**
+     * Creates NoteAdapter object
+     */
     private void setNoteAdapter()
     {
         NoteAdapter noteAdapter = new NoteAdapter(getApplicationContext(), Note.nonDeletedNotes());
@@ -51,6 +76,9 @@ public class Manual_V2 extends AppCompatActivity {
     }
 
 
+    /**
+     * Sets onItemClickListener of selected object in ListView
+     */
     private void setOnClickListener()
     {
         noteListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -67,12 +95,20 @@ public class Manual_V2 extends AppCompatActivity {
     }
 
 
+    /**
+     * Creates a new intent to start NoteDetailActivity activity
+     * @param view
+     */
     public void newNote(View view)
     {
         Intent newNoteIntent = new Intent(this, NoteDetailActivity.class);
         startActivity(newNoteIntent);
     }
 
+    /**
+     * When activity is paused, and user returns to activity onResume is invoked
+     * setNoteAdapter is run
+     */
     @Override
     protected void onResume()
     {
