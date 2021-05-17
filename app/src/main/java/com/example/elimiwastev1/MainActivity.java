@@ -1,5 +1,5 @@
 package com.example.elimiwastev1;
-//3
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -33,21 +33,29 @@ import java.io.InputStreamReader;
 //CANCEL A NOTIF
 //https://stackoverflow.com/questions/2665634/how-to-clear-a-notification-in-android#:~:text=Use%20the%20following%20code%20to,cancel(NOTIFICATION_ID)%3B
 
-//Update
 
+/**
+ * MainActivity class models the behavior of the home screen of the ElimiWaste app
+ */
 public class MainActivity extends AppCompatActivity {
-    //Variables for Notifications
+
 
 
     //Variables for Animation
-    Animation topAnim, bottomAnim;
-    ImageView image;
-    Button button2;
+    Animation topAnim, bottomAnim; //Splash Animations, topAnimation for ImageView and bottomAnimation for button2
+    ImageView image; //ImageView of ElimiWaste icon
+    Button button2; //Button to navigate to manual entry page
 
+    /**
+     * onCreate method, initializes features in activity_main layout file and starts animation
+     * @param savedInstanceState is the saved instance of the Main Activity page
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Removes date, and charging information from user view on home screen of app
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //Animations
@@ -58,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         image = findViewById(R.id.imageView);
         button2 = findViewById(R.id.button2);
 
+        //Sets animations to button and image
         image.setAnimation(topAnim);
         button2.setAnimation(bottomAnim);
 
@@ -91,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setUpWithNavController(navController); */
 
+        //button2 onClickListener opens Manual_V2 page for user to see their food items
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +157,9 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
+    /**
+     * onStart method invoked with onStart method call of MainActivity
+     */
         @Override
     protected void onStart() {
         super.onStart();
