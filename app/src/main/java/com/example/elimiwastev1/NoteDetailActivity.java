@@ -199,7 +199,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
             //converts enter date at 12 noon to milliseconds since the UNIX epoch
             //https://currentmillis.com/
             long dateEnteredMillis = 43200000L + 86400000L * (convertEnterDate.monthAndDayConverter() + convertEnterDate.yearConverter());
-            long dateExpireMillis = 43200000L + 86400000L * (convertExpireDate.monthAndDayConverter() + convertExpireDate.yearConverter());
+            long dateExpireMillis =  86400000L * (convertExpireDate.monthAndDayConverter() + convertExpireDate.yearConverter());
 
             Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
             Log.d("Barney0.6", "dateExpireMillis of: " + dateExpireMillis);
@@ -215,9 +215,11 @@ public class NoteDetailActivity  extends AppCompatActivity {
             Log.d("theLifeL", String.valueOf(expiryEntered));
 
             long theLifeL = 86400000L * theLife;
+
             if(!expiryEntered.isEmpty()){
                 theLifeL = dateExpireMillis - dateEnteredMillis;
             }
+
             Log.d("theLifeL", String.valueOf(theLifeL));
             Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
             //HALFLIFE NOTIFICATION
