@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter Food Info"
+            android:text="@string/enter_food_info"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="35sp"
             android:textColor="@color/white"
@@ -32,8 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="12dp"
-        android:text="Food Name"
+        android:layout_marginStart="12dp"
+        android:text="@string/food_name"
         android:fontFamily="sans-serif-condensed-medium"
         android:textColor="@color/darkGray"
         android:textSize="20sp"
@@ -44,13 +42,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:hint="Enter Your Food"
+        android:hint="@string/enter_your_food"
         android:fontFamily="sans-serif-condensed-medium"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:maxLines="1"
         android:textColor="@color/darkGray"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        tools:ignore="RtlHardcoded" />
 
 
     <TextView
@@ -58,8 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="12dp"
-        android:text="Add Purchase Date"
+        android:layout_marginStart="12dp"
+        android:text="@string/add_purchase_date"
         android:fontFamily="sans-serif-condensed-medium"
         android:textColor="@color/darkGray"
         android:textSize="20sp"
@@ -73,31 +72,33 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:backgroundTint="@color/white"
-        android:text="+"
+        android:text="@string/add_sign"
         android:textColor="@color/yaleBlue"
         android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="RtlHardcoded" />
 
     <TextView
         android:id="@+id/descriptionEditText"
         android:layout_width="300dp"
         android:layout_height="43dp"
         android:layout_gravity="left"
-        android:hint="Purchase Date"
+        android:hint="@string/purchase_date"
         android:minLines="3"
         android:layout_marginLeft="12dp"
         android:textAllCaps="false"
         android:textColor="@color/darkGray"
         android:fontFamily="sans-serif-condensed-medium"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:ignore="RtlHardcoded" />
 
     <TextView
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="12dp"
-        android:text="Add Expiration Date"
+        android:layout_marginStart="12dp"
+        android:text="@string/add_expiration_date"
         android:fontFamily="sans-serif-condensed-medium"
         android:textColor="@color/darkGray"
         android:textSize="20sp"
@@ -111,30 +112,32 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:backgroundTint="@color/white"
-        android:text="+"
+        android:text="@string/add_sign"
         android:textAllCaps="false"
         android:textColor="@color/yaleBlue"
         android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="RtlHardcoded" />
 
     <TextView
         android:id="@+id/exEditText"
         android:layout_width="300dp"
         android:layout_height="43dp"
         android:layout_gravity="left"
-        android:hint="Expiration Date"
+        android:hint="@string/expiration_date"
         android:minLines="3"
         android:layout_marginLeft="12dp"
         android:textAllCaps="false"
         android:textColor="@color/darkGray"
         android:fontFamily="sans-serif-condensed-medium"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:ignore="RtlHardcoded" />
 
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save Entry"
+        android:text="@string/save_entry"
         android:textAllCaps="false"
         android:textSize="25sp"
         android:backgroundTint="@color/oceanGreen"
@@ -151,7 +154,7 @@
         android:layout_marginTop="0dp"
         android:backgroundTint="@color/red"
         android:onClick="deleteNote"
-        android:text="Delete Entry"
+        android:text="@string/delete_entry"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="25sp"

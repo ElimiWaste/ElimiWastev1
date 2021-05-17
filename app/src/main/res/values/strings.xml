@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">ElimiWastev1</string>
     <string name="opening_page">Welcome to ElimiWaste!</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="home">Home Page</string>
-    <string name="ocr">OCR Page</string>
-    <string name="manual">Manual Page</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -24,4 +21,20 @@
     <string name="click_for_manual">Click for Manual</string>
     <string name="click_above_to_enter_date">Click above to enter date</string>
     <string name="click_for_entry">Click to Enter Food Items  ></string>
+    <string name="todo">TODO</string>
+    <string name="enter_food_info">Enter Food Info</string>
+    <string name="food_name">Food Name</string>
+    <string name="enter_your_food">Enter Your Food</string>
+    <string name="add_sign">+</string>
+    <string name="delete_entry">Delete Entry</string>
+    <string name="save_entry">Save Entry</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="add_expiration_date">Add Expiration Date</string>
+    <string name="add_purchase_date">Add Purchase Date</string>
+    <string name="purchase_date">Purchase Date</string>
+    <string name="current_items">Current Items</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="expiration_date2">Expiration Date:</string>
+    <string name="purchase_date2">Purchase Date:</string>
 </resources>
