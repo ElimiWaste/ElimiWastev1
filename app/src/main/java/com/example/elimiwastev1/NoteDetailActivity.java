@@ -221,22 +221,6 @@ public class NoteDetailActivity  extends AppCompatActivity {
                     }
                 }
                 Log.d("theLifeL", String.valueOf(expiryEntered));
-
-                long theLifeL = 86400000L * theLife;
-                if (!expiryEntered.isEmpty()) {
-                    theLifeL = dateExpireMillis - dateEnteredMillis;
-                }
-                Log.d("theLifeL", String.valueOf(theLifeL));
-                Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
-                //HALFLIFE NOTIFICATION
-                //Will send out a notification with a wait time determined by variable long waitTime.
-                Intent intent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
-                AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
-                AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                        NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis),
-                        pendingIntent);
             long theLifeL = 86400000L * theLife;
 
             if(!expiryEntered.isEmpty()){
