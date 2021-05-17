@@ -6,10 +6,19 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DateConvert {
+    //A day value from 1-31
     int theDay;
+    //The month from 1-12
     int theMonth;
+    //The year
     int theYear;
 
+    /**
+     * Constructs a DateConvert object
+     * @param day corresponds to theDay
+     * @param month corresponds to theMonth
+     * @param year corresponds to theYear
+     */
     public DateConvert(int day, int month, int year) {
         theDay = day;
         theMonth = month;

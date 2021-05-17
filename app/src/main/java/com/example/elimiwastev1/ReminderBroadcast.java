@@ -16,26 +16,34 @@ import java.util.ArrayList;
 
 
 public class ReminderBroadcast extends BroadcastReceiver{
+    //Name of the food
     String name;
+    //Date the food was entered
     String date;
+    //SQL database helper
     DatabaseHelper database;
+    //Cursor to get the Name
     Cursor cursorName;
+    //Cursor to get the Date
     Cursor cursorDate;
+    //How many rows there are in the database
     long rows;
 
     @Override
-    //Sends out the notification
+    //Sends out the notification for the half-life of the food
     public void onReceive(Context context, Intent intent) {
+        //Notification manager
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         database = new DatabaseHelper(context);
         rows = database.getRows();
-
-        cursorName = database.getItemName(String.valueOf(database.getRows()));
+        //Gets the name of the item just entered from the SQL database
+        cursorName = database.getItemName(String.valueOf(rows));
         if (cursorName.moveToFirst()){
             name = cursorName.getString(cursorName.getColumnIndex("NAME"));
         }
-
-        cursorDate = database.getItemDate(String.valueOf(database.getRows()));
+        Log.d("yah", String.valueOf(rows));
+        //Gets the Date of the item just purchased from the SQL database
+        cursorDate = database.getItemDate(String.valueOf(rows));
         if (cursorDate.moveToFirst()) {
             date = cursorDate.getString(cursorDate.getColumnIndex("DATE"));
         }

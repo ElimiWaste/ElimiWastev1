@@ -239,7 +239,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
                     NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis),
                     pendingIntent);
 
-                //TWO DAYS BEFORE NOTIFICATION
+            //TWO DAYS BEFORE NOTIFICATION
                 Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
                 PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, id, intent2, 0);
 
