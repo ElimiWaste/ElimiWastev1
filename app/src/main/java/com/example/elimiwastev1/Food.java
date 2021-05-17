@@ -2,6 +2,9 @@ package com.example.elimiwastev1;
 
 import androidx.lifecycle.Lifecycle;
 
+/**
+ * This class models the behavior of a Food object with a food name and shelf life
+ */
 public class Food {
 
     public String name; //stores the food name of the Food object

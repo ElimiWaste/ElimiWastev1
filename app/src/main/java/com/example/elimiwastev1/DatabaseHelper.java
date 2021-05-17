@@ -113,42 +113,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param oldVersion the old version of the sqlite database, stored as int
      * @param newVersion the new version of the sqlite database, stored as int
      */
+    //Note this class is commented out as it is needed for creating a DatabaseHelper, but is not used in the current iteration of ElimiWaste
+    //We may use this method with future extensions, so we have left it here
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        //  switch (oldVersion) {
-        //   case 1:
-        //        sqLiteDatabase.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + NEW_COLUMN + " TEXT");
-        //     case 2:
-        //        sqLiteDatabase.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + NEW_COLUMN + " TEXT");
-        //   }
-          /*  db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        onCreate(db); */
+//        switch (oldVersion) {
+//          case 1:
+//               sqLiteDatabase.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + NEW_COLUMN + " TEXT");
+//          case 2:
+//              sqLiteDatabase.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + NEW_COLUMN + " TEXT");
+//          }
+//            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+//        onCreate(db);
 
     }
-
-  /*  public boolean addData(Note note) {
-      /*  SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(ID_FIELD, note.getId());
-        contentValues.put(TITLE_FIELD, note.getTitle());
-        contentValues.put(DESC_FIELD, note.getDescription());
-        contentValues.put(DELETED_FIELD, getStringFromDate(note.getDeleted()));
-
-        db.insert(TABLE_NAME, null, contentValues); */
-          /* long result = db.insert(TABLE_NAME, null, contentValues);
-        if (result == -1) {
-            return false;
-        }
-        else {
-            return true;
-        }
-        return result != -1;
-
-
-        Log.d(TAG, "addData: Adding " + note.getTitle() + " to " + TABLE_NAME);
-
-
-    } */
 
 
     /**
@@ -168,7 +146,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
 
     }
-
 
     /**
      * Returns all the data from database

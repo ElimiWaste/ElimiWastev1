@@ -5,11 +5,20 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Class converts the date from day month year format to milliseconds, accepts any date after 1970
+ */
 public class DateConvert {
     int theDay;
     int theMonth;
     int theYear;
 
+    /**
+     * Paramter constructor, takes input variables day, month, and year as int and stores
+     * @param day is user-defined day stored as int
+     * @param month is user-defined month stored as int
+     * @param year is user-defined year stored as int
+     */
     public DateConvert(int day, int month, int year) {
         theDay = day;
         theMonth = month;
