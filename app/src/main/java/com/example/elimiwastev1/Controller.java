@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class Controller extends Application {
 
-
+    //declares arraylist of Food objects
     ArrayList<Food> foodList = new ArrayList<Food>();
 
     public ArrayList<Food> getFood() {
