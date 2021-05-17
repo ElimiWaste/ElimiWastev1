@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed-medium"
         android:maxLines="1"
-        android:text="Title"
+        android:text="@string/title"
         android:textColor="@color/yaleBlue"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -21,7 +21,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Purchase Date:" />
+        android:text="@string/purchase_date2" />
 
     <TextView
         android:id="@+id/cellDesc"
@@ -30,7 +30,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:maxLines="1"
-        android:text="Description"
+        android:text="@string/description"
         android:textColor="@color/celadonBlue"
         android:textSize="20sp" />
 
@@ -38,7 +38,7 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Expiration Date:" />
+        android:text="@string/expiration_date2" />
 
     <TextView
         android:id="@+id/exDate"
@@ -47,7 +47,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:maxLines="1"
-        android:text="Expiration Date"
+        android:text="@string/expiration_date"
         android:textColor="@color/oceanGreen"
         android:textSize="20sp" />
 
