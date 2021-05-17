@@ -15,6 +15,7 @@ import android.util.Log;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 // import androidx.annotation.Nullable;
@@ -55,7 +56,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return databaseHelper;
     }
 
+    Calendar calendar = Calendar.getInstance();
 
+    int mYear = calendar.get(Calendar.YEAR);
+    int mMonth = calendar.get(Calendar.MONTH);
+    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
     @Override
     public void onCreate(SQLiteDatabase databaseHelper) {
       /*  String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +

@@ -204,10 +204,10 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 DateConvert convertExpireDate = new DateConvert(theDayExpire, theMonthExpire, theYearExpire);
                 final Controller aController = (Controller) getApplicationContext();
 
-                //converts enter date at 12 noon to milliseconds since the UNIX epoch
-                //https://currentmillis.com/
-                long dateEnteredMillis = 43200000L + 86400000L * (convertEnterDate.monthAndDayConverter() + convertEnterDate.yearConverter());
-                long dateExpireMillis = 43200000L + 86400000L * (convertExpireDate.monthAndDayConverter() + convertExpireDate.yearConverter());
+            //converts enter date at 12 noon to milliseconds since the UNIX epoch
+            //https://currentmillis.com/
+            long dateEnteredMillis = 43200000L + 86400000L * (convertEnterDate.monthAndDayConverter() + convertEnterDate.yearConverter());
+            long dateExpireMillis =  86400000L * (convertExpireDate.monthAndDayConverter() + convertExpireDate.yearConverter());
 
                 Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
                 Log.d("Barney0.6", "dateExpireMillis of: " + dateExpireMillis);
@@ -237,6 +237,23 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
                         NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis),
                         pendingIntent);
+            long theLifeL = 86400000L * theLife;
+
+            if(!expiryEntered.isEmpty()){
+                theLifeL = dateExpireMillis - dateEnteredMillis;
+            }
+
+            Log.d("theLifeL", String.valueOf(theLifeL));
+            Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
+            //HALFLIFE NOTIFICATION
+            //Will send out a notification with a wait time determined by variable long waitTime.
+            Intent intent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
+            AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
+            AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
+                    NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis),
+                    pendingIntent);
 
                 //TWO DAYS BEFORE NOTIFICATION
                 Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
@@ -248,6 +265,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
                         pendingIntent2);
             }
         }
+
         else
         {
             selectedNote.setTitle(title);

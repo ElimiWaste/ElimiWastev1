@@ -29,24 +29,20 @@ public class ReminderBroadcast extends BroadcastReceiver{
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         database = new DatabaseHelper(context);
         rows = database.getRows();
-        Log.d("12345", String.valueOf(rows));
-        Log.d("12345", "hi");
 
         cursorName = database.getItemName(String.valueOf(database.getRows()));
         if (cursorName.moveToFirst()){
             name = cursorName.getString(cursorName.getColumnIndex("NAME"));
         }
-        Log.d("12345", "hi" + name);
 
         cursorDate = database.getItemDate(String.valueOf(database.getRows()));
         if (cursorDate.moveToFirst()) {
             date = cursorDate.getString(cursorDate.getColumnIndex("DATE"));
         }
-        Log.d("12345", "hi"+ date);
 
         Notification notification = new NotificationCompat.Builder(context, Controller.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle("Your food item \"" + name + "\" is halfway expired!")
+                .setContentTitle("Your food item \"" + name + "\" looks like it's more than halfway expired!")
                 .setContentText("Check on \"" + name + "\" that was purchased on \"" + date + "\"")
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
