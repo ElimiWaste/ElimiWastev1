@@ -105,6 +105,8 @@ public class NoteDetailActivity  extends AppCompatActivity {
         dateEnter2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                DateConvert convertEnterDate = new DateConvert(theDay, theMonth, theYear);
+                long dateEnteredMillis = 43200000L + 86400000L * (convertEnterDate.monthAndDayConverter() + convertEnterDate.yearConverter());
                 calendar2 = Calendar.getInstance();
                 day2 = calendar2.get(Calendar.DAY_OF_MONTH);
                 month2 = calendar2.get(Calendar.MONTH);
@@ -120,6 +122,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
                         dateView2.setText(mMonth + 1 + "/" + mDayOfMonth + "/" + mYear);
                     }
                 },year2, month2, day2);
+                datepicker2.getDatePicker().setMinDate(dateEnteredMillis);
                 datepicker2.show();
             }
         });
