@@ -18,37 +18,53 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-// import androidx.annotation.Nullable;
+
+
+//Resources used:
 //https://stackoverflow.com/questions/18097748/how-to-get-row-count-in-sqlite-using-android
-// TODO: Add one more date field 
+//Tutorial followed to create class: https://www.youtube.com/watch?v=4k1ZMpO9Zn0&t=884s
 
-// Update 2
+
+/**
+ * DatabaseHelper class stores, adds, and deletes user entered objects in a SQLite database
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static DatabaseHelper databaseHelper;
-    private static final String TAG = "DatabaseHelper";
+    private static DatabaseHelper databaseHelper; //Method of DatabaseHelper class
+    private static final String TAG = "DatabaseHelper"; //Tag "DatabaseHelper"
 
-    private static final String DATABASE_NAME = "NoteDB";
-    private static final int DATABASE_VERSION = 1;
-    private static final String TABLE_NAME = "Note";
-    private static final String COUNTER = "Counter";
+    private static final String DATABASE_NAME = "NoteDB"; //The name of the database stored as a String
+    private static final int DATABASE_VERSION = 1; //The version of the database stored as an int
+    private static final String TABLE_NAME = "Note"; //The table name of the database stored as a note
+    private static final String COUNTER = "Counter"; //The counter of the database stored as a String
 
 
-    public static final String ID_FIELD = "ID";
-    public static final String TITLE_FIELD = "NAME";
-    public static final String DESC_FIELD = "DATE ";
-    public static final String EX_FIELD = "EXPIRATION "; //added
-    private static final String DELETED_FIELD = "deleted";
+    public static final String ID_FIELD = "ID"; //The ID column of the database stored as a String
+    public static final String TITLE_FIELD = "NAME"; //The Title_Field column of the database stored as a String
+    public static final String DESC_FIELD = "DATE "; //The Desc_Field column of the database stored as a String
+    public static final String EX_FIELD = "EXPIRATION "; //The Ex_Field column of the database stored as a String
+    private static final String DELETED_FIELD = "deleted"; //The Deleted_Field column of the database stored as a String
 
 
     @SuppressLint("SimpleDateFormat")
-    private static final DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+    private static final DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss"); //Creates date to store deleted date of object
 
 
+    /**
+     * Parameter constructor
+     * Takes the following 1 input:
+     * @param context the Context of the DatabaseHelper class, used to construct
+     */
     public DatabaseHelper(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * instanceOfDatabase method, takes in context to create DatabaseHelper object
+     * if DatabaseHelper is already constructed, it will return the databaseHelper
+     * @param context keyword  used to check if reference variable contains given type of object reference
+     * @return databaseHelper of type DatabaseHelper with given context
+     */
     public static DatabaseHelper instanceOfDatabase(Context context) {
         if (databaseHelper == null)
             databaseHelper = new DatabaseHelper(context);
@@ -56,17 +72,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return databaseHelper;
     }
 
-    Calendar calendar = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance(); //Creating a Calendar object
 
-    int mYear = calendar.get(Calendar.YEAR);
-    int mMonth = calendar.get(Calendar.MONTH);
-    int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+    int mYear = calendar.get(Calendar.YEAR); //Year of the Calendar
+    int mMonth = calendar.get(Calendar.MONTH); //Month of the Calendar
+    int mDay = calendar.get(Calendar.DAY_OF_MONTH); //Day of the Calendar
+
+    /**
+     * onCreate method
+     * Creates table of DatabaseHelper with Table Name and primary key of counter with 5 columns
+     * @param databaseHelper a SQLiteDatabase object
+     */
     @Override
     public void onCreate(SQLiteDatabase databaseHelper) {
-      /*  String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " NAME TEXT, DATE TEXT)";
-        db.execSQL(createTable); */
-
         StringBuilder sql;
         sql = new StringBuilder()
                 .append("CREATE TABLE ")
@@ -89,6 +107,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * If new field will be added, onUpgrade will be used
+     * switches oldVersion of database to newVersion
+     * @param sqLiteDatabase the sqLiteDatabase the will be switched to a new version
+     * @param oldVersion the old version of the sqlite database, stored as int
+     * @param newVersion the new version of the sqlite database, stored as int
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         //  switch (oldVersion) {
@@ -127,6 +152,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     } */
 
 
+    /**
+     * Takes object of Note class and adds to database
+     * @param note user-defined note, stores ID, title, desc, expiry, and deleted date in database as 5 columns
+     */
     public void addNoteToDatabase(Note note) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -144,7 +173,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Returns all the data from database
-     * @return
+     * @return all the data from the database
      */
     public Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -154,6 +183,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Shows all the data in a database
+     * @return all the data from the database
+     */
     public Cursor showData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
@@ -174,6 +207,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Gets ID from className
+     * @param className the class name stored as String
+     * @return int query of ID
+     */
     public int getIdFromClassName(String className) {
         String query = "SELECT ID" +
                 " FROM " + ID_FIELD +
@@ -185,19 +223,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return query2;
     }
 
+    /**
+     * Gets item name based on its corresponding ID
+     * @param id the ID of the the note object
+     * @return the itemName from column TITLE_FIELD
+     */
     public Cursor getItemName(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + TITLE_FIELD + " FROM " + TABLE_NAME +
                 " WHERE " + COUNTER + " = '" + id + "'";
         return db.rawQuery(query, null);
     }
+
+    /**
+     * Gets item date based on its corresponding ID
+     * @param id the ID of the note object
+     * @return the item purchase date from DESC_FIELD column
+     */
     public Cursor getItemDate(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + DESC_FIELD + " FROM " + TABLE_NAME +
                 " WHERE " + COUNTER + " = '" + id + "'";
         return db.rawQuery(query, null);
     }
-    //added Getter Method
+
+
+    /**
+     * Gets item expiration date based on its corresponding ID
+     * @param id the ID of the note object
+     * @return the expiration date from EX_FIELD column
+     */
     public Cursor getExpiration(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT " + EX_FIELD + " FROM " + TABLE_NAME +
@@ -205,6 +260,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
+    /**
+     * Gets a count of the number of rows in the current database
+     * @return the number of rows as long
+     */
     public long getRows() {
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, TABLE_NAME);
@@ -212,6 +271,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count;
     }
 
+    /**
+     * method repopulates memory of database and adds Note object to noteArrayList
+     */
     public void populateNoteListArray() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -232,6 +294,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * When a note is edited, a note is passed into the method to update it's columns
+     * ID, title, desc, expiry, and deleted date are modified
+     * @param note the note object being edited
+     */
     public void updateNoteInDB(Note note) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -244,6 +311,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.update(TABLE_NAME, contentValues, ID_FIELD + " =? ", new String[]{String.valueOf(note.getId())});
     }
 
+    /**
+     * Takes in a date and returns a String
+     * @param date the input Date
+     * @return thes the date format as String otherwise, returns null
+     */
     private String getStringFromDate(Date date) {
         if (date == null)
             return null;
@@ -251,7 +323,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
+    /**
+     * Takes String and returns date
+     * @param string the input String that will return as date
+     * @return dateFormat as String or null
+     */
     private Date getDateFromString(String string) {
         try {
             return dateFormat.parse(string);
