@@ -24,7 +24,6 @@ import java.util.Date;
 //https://stackoverflow.com/questions/18097748/how-to-get-row-count-in-sqlite-using-android
 //Tutorial followed to create class: https://www.youtube.com/watch?v=4k1ZMpO9Zn0&t=884s
 
-
 /**
  * DatabaseHelper class stores, adds, and deletes user entered objects in a SQLite database
  */
