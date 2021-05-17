@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 
-//Update
+//Update 2
 public class NoteAdapter extends ArrayAdapter<Note> {
 
     public NoteAdapter(Context context, List<Note> notes)
@@ -34,6 +34,8 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         TextView title = convertView.findViewById(R.id.cellTitle);
         TextView desc = convertView.findViewById(R.id.cellDesc);
         TextView expiry = convertView.findViewById(R.id.exDate); //added
+        TextView label1 = convertView.findViewById(R.id.textView);
+        TextView label2 = convertView.findViewById(R.id.textView2);
 
         title.setText(note.getTitle());
         desc.setText(note.getDescription());
