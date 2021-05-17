@@ -10,12 +10,10 @@ import androidx.core.app.NotificationManagerCompat;
 
 
 public class NotificationsLogic extends AppCompatActivity{
-    public static long halfLifeNotif(int foodLife, long dateEnteredMillis) {
-        long theLifeL = 86400000L * foodLife;
+    public static long halfLifeNotif(long theLifeL, long dateEnteredMillis) {
         return dateEnteredMillis + theLifeL / 2;
     }
-    public static long twoDayNotif(int foodLife, long dateEnteredMillis) {
-        long theLifeL = 86400000L * (foodLife-2);
-        return dateEnteredMillis + theLifeL;
+    public static long twoDayNotif(long theLifeL, long dateEnteredMillis) {
+        return dateEnteredMillis + theLifeL - 2 * 86400000L ;
     }
 }

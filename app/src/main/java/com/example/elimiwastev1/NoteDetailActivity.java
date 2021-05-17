@@ -212,12 +212,13 @@ public class NoteDetailActivity  extends AppCompatActivity {
                     break;
                 }
             }
-//            if(dateEntered.isEmpty() && expiryEntered.isEmpty()){
-//
-//            }
-//            if(theLife == -1){
-//                Toast.makeText(NoteDetailActivity.this, "Food entered not found in ", Toast.LENGTH_LONG).show();
-//            }
+            Log.d("theLifeL", String.valueOf(expiryEntered));
+
+            long theLifeL = 86400000L * theLife;
+            if(!expiryEntered.isEmpty()){
+                theLifeL = dateExpireMillis - dateEnteredMillis;
+            }
+            Log.d("theLifeL", String.valueOf(theLifeL));
             Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
             //HALFLIFE NOTIFICATION
             //Will send out a notification with a wait time determined by variable long waitTime.
@@ -226,7 +227,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
             AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                    NotificationsLogic.halfLifeNotif(theLife, dateEnteredMillis),
+                    NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis),
                     pendingIntent);
 
             //TWO DAYS BEFORE NOTIFICATION
@@ -235,7 +236,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
 
             //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                    NotificationsLogic.twoDayNotif(theLife, dateEnteredMillis),
+                    NotificationsLogic.twoDayNotif(theLifeL, dateEnteredMillis),
                     pendingIntent2);
         }
 
