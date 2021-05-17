@@ -183,66 +183,71 @@ public class NoteDetailActivity  extends AppCompatActivity {
         String expiry = String.valueOf(dateView2.getText()); //added
 
         //boolean insertData = userEntryDB.addData(name, currentDate);
-        if(selectedNote == null)
-        {
-            int id = Note.noteArrayList.size();
-            Note newNote = new Note(id, title, desc, expiry);
-            Note.noteArrayList.add(newNote);
-            sqLiteManager.addNoteToDatabase(newNote);
+        if(selectedNote == null) {
+            if (desc.isEmpty()) {
+                Toast.makeText(NoteDetailActivity.this, "Purchase Date not found! Item not saved! Please re-enter entry.", Toast.LENGTH_LONG).show();
 
-            int theLife = -1;
-            String nameEntered = titleEditText.getText().toString();
-            String dateEntered = dateView.getText().toString();
-            String expiryEntered = dateView2.getText().toString(); //added
+            }
+            else {
+                int id = Note.noteArrayList.size();
+                Note newNote = new Note(id, title, desc, expiry);
+                Note.noteArrayList.add(newNote);
+                sqLiteManager.addNoteToDatabase(newNote);
 
-            DateConvert convertEnterDate = new DateConvert(theDay, theMonth, theYear);
-            DateConvert convertExpireDate = new DateConvert(theDayExpire, theMonthExpire, theYearExpire);
-            final Controller aController = (Controller) getApplicationContext();
 
-            //converts enter date at 12 noon to milliseconds since the UNIX epoch
-            //https://currentmillis.com/
-            long dateEnteredMillis = 43200000L + 86400000L * (convertEnterDate.monthAndDayConverter() + convertEnterDate.yearConverter());
-            long dateExpireMillis = 43200000L + 86400000L * (convertExpireDate.monthAndDayConverter() + convertExpireDate.yearConverter());
+                int theLife = -1;
+                String nameEntered = titleEditText.getText().toString();
+                String dateEntered = dateView.getText().toString();
+                String expiryEntered = dateView2.getText().toString(); //added
 
-            Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
-            Log.d("Barney0.6", "dateExpireMillis of: " + dateExpireMillis);
+                DateConvert convertEnterDate = new DateConvert(theDay, theMonth, theYear);
+                DateConvert convertExpireDate = new DateConvert(theDayExpire, theMonthExpire, theYearExpire);
+                final Controller aController = (Controller) getApplicationContext();
 
-            ArrayList<Food> firebaseFoods = aController.getFood();
-            for(int i = 0; i < firebaseFoods.size(); i++){
-                if(nameEntered.equalsIgnoreCase(firebaseFoods.get(i).getName())){
-                    String foodAndDateFirebase = firebaseFoods.get(i).getLife();
-                    theLife = convertEnterDate.convertInputDate(foodAndDateFirebase);
-                    break;
+                //converts enter date at 12 noon to milliseconds since the UNIX epoch
+                //https://currentmillis.com/
+                long dateEnteredMillis = 43200000L + 86400000L * (convertEnterDate.monthAndDayConverter() + convertEnterDate.yearConverter());
+                long dateExpireMillis = 43200000L + 86400000L * (convertExpireDate.monthAndDayConverter() + convertExpireDate.yearConverter());
+
+                Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
+                Log.d("Barney0.6", "dateExpireMillis of: " + dateExpireMillis);
+
+                ArrayList<Food> firebaseFoods = aController.getFood();
+                for (int i = 0; i < firebaseFoods.size(); i++) {
+                    if (nameEntered.equalsIgnoreCase(firebaseFoods.get(i).getName())) {
+                        String foodAndDateFirebase = firebaseFoods.get(i).getLife();
+                        theLife = convertEnterDate.convertInputDate(foodAndDateFirebase);
+                        break;
+                    }
                 }
+                Log.d("theLifeL", String.valueOf(expiryEntered));
+
+                long theLifeL = 86400000L * theLife;
+                if (!expiryEntered.isEmpty()) {
+                    theLifeL = dateExpireMillis - dateEnteredMillis;
+                }
+                Log.d("theLifeL", String.valueOf(theLifeL));
+                Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
+                //HALFLIFE NOTIFICATION
+                //Will send out a notification with a wait time determined by variable long waitTime.
+                Intent intent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
+                AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
+                AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
+                        NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis),
+                        pendingIntent);
+
+                //TWO DAYS BEFORE NOTIFICATION
+                Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
+                PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, id, intent2, 0);
+
+                //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
+                AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
+                        NotificationsLogic.twoDayNotif(theLifeL, dateEnteredMillis),
+                        pendingIntent2);
             }
-            Log.d("theLifeL", String.valueOf(expiryEntered));
-
-            long theLifeL = 86400000L * theLife;
-            if(!expiryEntered.isEmpty()){
-                theLifeL = dateExpireMillis - dateEnteredMillis;
-            }
-            Log.d("theLifeL", String.valueOf(theLifeL));
-            Toast.makeText(NoteDetailActivity.this, "Data Successfully Inserted and Reminder Set!", Toast.LENGTH_LONG).show();
-            //HALFLIFE NOTIFICATION
-            //Will send out a notification with a wait time determined by variable long waitTime.
-            Intent intent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
-            AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
-            AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                    NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis),
-                    pendingIntent);
-
-            //TWO DAYS BEFORE NOTIFICATION
-            Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
-            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, id, intent2, 0);
-
-            //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
-            AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
-                    NotificationsLogic.twoDayNotif(theLifeL, dateEnteredMillis),
-                    pendingIntent2);
         }
-
         else
         {
             selectedNote.setTitle(title);
