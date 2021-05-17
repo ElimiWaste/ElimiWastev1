@@ -8,7 +8,10 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
-
+/**
+ * This class models the logic of the Notifications sent by ElimiWaste
+ * the notifications are sent during a half life and two day basis
+ */
 public class NotificationsLogic extends AppCompatActivity{
     /**
      * Converts theLifeL and dateEnteredMillis into a date in millis
