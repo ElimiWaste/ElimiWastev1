@@ -33,9 +33,13 @@ public class NoteDetailActivity extends AppCompatActivity {
     Button dateEnter;
     Calendar calendar;
     DatePickerDialog datepicker;
+
+    //day, month, year used in the calendar
     int day;
     int month;
     int year;
+
+    //theDay, theMonth, theYear used to build the notification. Store what the user entered
     int theDay;
     int theMonth;
     int theYear;
@@ -46,9 +50,13 @@ public class NoteDetailActivity extends AppCompatActivity {
     Button dateEnter2;
     Calendar calendar2;
     DatePickerDialog datepicker2;
+
+    //day, month, year used in the calendar
     int day2;
     int month2;
     int year2;
+
+    //theDay, theMonth, theYear used to build the notification. Store what the user entered
     int theDayExpire;
     int theMonthExpire;
     int theYearExpire;
@@ -92,6 +100,7 @@ public class NoteDetailActivity extends AppCompatActivity {
                      */
                     public void onDateSet(DatePicker view, int mYear, int mMonth, int mDayOfMonth) {
                         theDay = mDayOfMonth;
+                        //Months start at 0
                         theMonth = mMonth + 1;
                         theYear = mYear;
                         dateView.setText(mMonth + 1 + "/" + mDayOfMonth + "/" + mYear);
@@ -162,7 +171,7 @@ public class NoteDetailActivity extends AppCompatActivity {
      */
     private void initWidgets() {
         titleEditText = findViewById(R.id.titleEditText);
-        dateView = findViewById((R.id.descriptionEditText));
+        dateView = findViewById((R.id.descriptionEditText)); //??? - edited but not sure
         dateView2 = (TextView) findViewById((R.id.exEditText)); // added
         deleteButton = findViewById(R.id.deleteNoteButton);
 
@@ -200,9 +209,9 @@ public class NoteDetailActivity extends AppCompatActivity {
         //the name of the food
         String title = String.valueOf(titleEditText.getText());
         //the date purchased
-        String desc = String.valueOf(dateView.getText()); //changed
+        String desc = String.valueOf(dateView.getText());
         //the date of expiration
-        String expiry = String.valueOf(dateView2.getText()); //added
+        String expiry = String.valueOf(dateView2.getText());
         //Checks if editing or saving a new note
         if (selectedNote == null) {
 
