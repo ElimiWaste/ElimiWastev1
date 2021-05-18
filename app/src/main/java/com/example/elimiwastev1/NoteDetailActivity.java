@@ -53,6 +53,10 @@ public class NoteDetailActivity extends AppCompatActivity {
     int theMonthExpire;
     int theYearExpire;
 
+    /**
+     * onCreate method instantiates notes, autocomplete textview, and calendar.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,8 +142,9 @@ public class NoteDetailActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * @return
+    /** Creates a copy of the arraylist of Food objects from database to an array
+     * To allow for parsing of array for autocomplete textview
+     * @return array of food names for autocomplete textview
      */
     private String[] autoListMaker() {
         final Controller aController = (Controller) getApplicationContext();
@@ -152,10 +157,12 @@ public class NoteDetailActivity extends AppCompatActivity {
         return foodList;
     }
 
-
+    /*
+    Allows to compile all the locations of possible input in manual entry page
+     */
     private void initWidgets() {
         titleEditText = findViewById(R.id.titleEditText);
-        dateView = findViewById((R.id.descriptionEditText)); //??? - edited but not sure
+        dateView = findViewById((R.id.descriptionEditText));
         dateView2 = (TextView) findViewById((R.id.exEditText)); // added
         deleteButton = findViewById(R.id.deleteNoteButton);
 
@@ -184,8 +191,8 @@ public class NoteDetailActivity extends AppCompatActivity {
 
     /**
      * Saves the current note to the SQL database and sets up the notifications with Alarmmanagers
-     *
-     * @param view
+     * @param view, as in the view of the manual entry page (the input receiver and logic portion of the code)
+     *  compares the SQL database to the Firebase to retrieve food expiration dates and subsequent notifications
      */
     public void saveNote(View view) {
         //database object
@@ -356,8 +363,8 @@ public class NoteDetailActivity extends AppCompatActivity {
 
     /**
      * Deletes a food item along with the corresponding notification
-     *
-     * @param view
+     * @param view -- another instance of the view listener of the manual entry page
+     * Specifically used to delete the note from the view of the user
      */
     public void deleteNote(View view) {
         int id = selectedNote.getId();
