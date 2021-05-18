@@ -26,7 +26,7 @@ import java.util.Date;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static java.lang.Long.MAX_VALUE;
 
-//Update
+//Tutorial followed to create class: https://www.youtube.com/watch?v=4k1ZMpO9Zn0&t=884s
 public class NoteDetailActivity  extends AppCompatActivity {
 
     private EditText titleEditText;
@@ -191,8 +191,8 @@ public class NoteDetailActivity  extends AppCompatActivity {
 
         //boolean insertData = userEntryDB.addData(name, currentDate);
         if(selectedNote == null) {
-            if (desc.isEmpty()) {
-                Toast.makeText(NoteDetailActivity.this, "Purchase Date not found! Item not saved! Please re-enter entry.", Toast.LENGTH_LONG).show();
+            if (desc.isEmpty() || title.isEmpty()) {
+                Toast.makeText(NoteDetailActivity.this, "Purchase Date and Food Name not found! Item not saved! Please re-enter entry.", Toast.LENGTH_LONG).show();
 
             }
             else {
