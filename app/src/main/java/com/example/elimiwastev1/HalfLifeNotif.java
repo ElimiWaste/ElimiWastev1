@@ -15,7 +15,7 @@ import androidx.core.app.NotificationManagerCompat;
 import java.util.ArrayList;
 
 
-public class ReminderBroadcast extends BroadcastReceiver{
+public class HalfLifeNotif extends BroadcastReceiver{
     //Name of the food
     String name;
     //Date the food was entered
@@ -30,7 +30,11 @@ public class ReminderBroadcast extends BroadcastReceiver{
     long rows;
 
     @Override
-    //Sends out the notification for the half-life of the food
+    /**
+     * Sends out the notification for the half-life of the food
+     * @param context the context in which the broadcast is received
+     * @param intent the intent of the broadcast
+     */
     public void onReceive(Context context, Intent intent) {
         //Notification manager
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -50,12 +54,16 @@ public class ReminderBroadcast extends BroadcastReceiver{
         //Builds the notification
         Notification notification = new NotificationCompat.Builder(context, Controller.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_one)
+                //title of the notification
                 .setContentTitle("Your food item \"" + name + "\" looks like it's more than halfway expired!")
+                //text of the notifications
                 .setContentText("Check on \"" + name + "\" that was purchased on \"" + date + "\"")
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                //Notification is of default priority
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
                 .build();
+        //Not sure if giving each notif a unique ID is needed, as the cancel works by canceling the pending intent, not the notif.
         notificationManager.notify((int) database.getRows() + 1, notification);
     }
 }
