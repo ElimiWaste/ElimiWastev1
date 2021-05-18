@@ -47,7 +47,7 @@ public class ReminderBroadcast extends BroadcastReceiver{
         if (cursorDate.moveToFirst()) {
             date = cursorDate.getString(cursorDate.getColumnIndex("DATE"));
         }
-
+        //Builds the notification
         Notification notification = new NotificationCompat.Builder(context, Controller.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_one)
                 .setContentTitle("Your food item \"" + name + "\" looks like it's more than halfway expired!")

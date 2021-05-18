@@ -105,6 +105,13 @@ public class NoteDetailActivity  extends AppCompatActivity {
         dateEnter2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                String dateEntered = dateView.getText().toString();
+                if(!dateEntered.isEmpty()) {
+                    String[] dayMonthYearEntered = dateEntered.split("/");
+                    theDay = Integer.parseInt(dayMonthYearEntered[1]);
+                    theMonth = Integer.parseInt(dayMonthYearEntered[0]);
+                    theYear = Integer.parseInt(dayMonthYearEntered[2]);
+                }
                 DateConvert convertEnterDate = new DateConvert(theDay, theMonth, theYear);
                 long dateEnteredMillis = 43200000L + 86400000L * (convertEnterDate.monthAndDayConverter() + convertEnterDate.yearConverter());
                 calendar2 = Calendar.getInstance();
@@ -238,6 +245,7 @@ public class NoteDetailActivity  extends AppCompatActivity {
             AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
                     NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis),
                     pendingIntent);
+                Log.d("Barney1.4", String.valueOf(NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis)));
 
             //TWO DAYS BEFORE NOTIFICATION
                 Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
@@ -247,15 +255,86 @@ public class NoteDetailActivity  extends AppCompatActivity {
                 AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
                         NotificationsLogic.twoDayNotif(theLifeL, dateEnteredMillis),
                         pendingIntent2);
+                Log.d("Barney1.4", String.valueOf(NotificationsLogic.twoDayNotif(theLifeL, dateEnteredMillis)));
             }
         }
 
         else
         {
-            selectedNote.setTitle(title);
-            selectedNote.setDescription(desc);
-            selectedNote.setExpiration(expiry); //added
-            sqLiteManager.updateNoteInDB(selectedNote);
+
+                selectedNote.setTitle(title);
+                selectedNote.setDescription(desc);
+                selectedNote.setExpiration(expiry); //added
+                sqLiteManager.updateNoteInDB(selectedNote);
+                int id = selectedNote.getId();
+
+                int theLife = -1;
+                String nameEntered = titleEditText.getText().toString();
+                String dateEntered = dateView.getText().toString();
+                String expiryEntered = dateView2.getText().toString(); //added
+
+                String[] dayMonthYearEntered = dateEntered.split("/");
+                String[] dayMonthYearExpire = expiryEntered.split("/");
+
+                theDay = Integer.parseInt(dayMonthYearEntered[1]);
+                theMonth = Integer.parseInt(dayMonthYearEntered[0]);
+                theYear = Integer.parseInt(dayMonthYearEntered[2]);
+
+                theDayExpire = Integer.parseInt(dayMonthYearExpire[1]);
+                theMonthExpire = Integer.parseInt(dayMonthYearExpire[0]);
+                theYearExpire = Integer.parseInt(dayMonthYearExpire[2]);
+
+                DateConvert convertEnterDate = new DateConvert(theDay, theMonth, theYear);
+                DateConvert convertExpireDate = new DateConvert(theDayExpire, theMonthExpire, theYearExpire);
+
+                final Controller aController = (Controller) getApplicationContext();
+
+                //converts enter date at 12 noon to milliseconds since the UNIX epoch
+                //https://currentmillis.com/
+                long dateEnteredMillis = 43200000L + 86400000L * (convertEnterDate.monthAndDayConverter() + convertEnterDate.yearConverter());
+                long dateExpireMillis =  86400000L * (convertExpireDate.monthAndDayConverter() + convertExpireDate.yearConverter());
+
+                Log.d("Barney0.6", "dateEnteredMillis of: " + dateEnteredMillis);
+                Log.d("Barney0.6", "dateExpireMillis of: " + dateExpireMillis);
+
+                ArrayList<Food> firebaseFoods = aController.getFood();
+                for (int i = 0; i < firebaseFoods.size(); i++) {
+                    if (nameEntered.equalsIgnoreCase(firebaseFoods.get(i).getName())) {
+                        String foodAndDateFirebase = firebaseFoods.get(i).getLife();
+                        theLife = convertEnterDate.convertInputDate(foodAndDateFirebase);
+                        break;
+                    }
+                }
+                Log.d("theLifeL", String.valueOf(expiryEntered));
+                long theLifeL = 86400000L * theLife;
+
+                if(!expiryEntered.isEmpty()){
+                    theLifeL = dateExpireMillis - dateEnteredMillis;
+                }
+
+                Log.d("theLifeL", String.valueOf(theLifeL));
+                Toast.makeText(NoteDetailActivity.this, "Changes saved successfully!", Toast.LENGTH_LONG).show();
+                //HALFLIFE NOTIFICATION
+                //Will send out a notification with a wait time determined by variable long waitTime.
+                Intent intent = new Intent(NoteDetailActivity.this, ReminderBroadcast.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
+                AlarmManager AlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
+                AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
+                        NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis),
+                        pendingIntent);
+                Log.d("Barney1.5", String.valueOf(NotificationsLogic.halfLifeNotif(theLifeL, dateEnteredMillis)));
+
+                //TWO DAYS BEFORE NOTIFICATION
+                Intent intent2 = new Intent(NoteDetailActivity.this, ReminderBroadcast2.class);
+                PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, id, intent2, 0);
+
+                //Will wake up the device to send the notification at this time. Does not matter whether or not the application is closed.
+                AlarmManager.set(android.app.AlarmManager.RTC_WAKEUP,
+                        NotificationsLogic.twoDayNotif(theLifeL, dateEnteredMillis),
+                        pendingIntent2);
+                Log.d("Barney1.5", String.valueOf(NotificationsLogic.twoDayNotif(theLifeL, dateEnteredMillis)));
+            Log.d("This is a test", "I said this is a test");
         }
         finish();
     }

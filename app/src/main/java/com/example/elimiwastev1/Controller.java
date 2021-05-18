@@ -115,7 +115,7 @@ public class Controller extends Application {
                     CHANNEL_2_ID,
                     "ReminderChannel2",
                     //sets priority of the second channel to be low
-                    NotificationManager.IMPORTANCE_LOW
+                    NotificationManager.IMPORTANCE_HIGH
 
             );
             channel2.setDescription("This is the second channel");

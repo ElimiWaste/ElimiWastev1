@@ -46,7 +46,7 @@ public class ReminderBroadcast2 extends BroadcastReceiver{
                 .setContentTitle("Your \"" + name + "\" expires in less than two days!!!")
                 .setContentText("Check up on \""  + name +  "\"that was purchased on \"" + date + "\"" )
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .build();
         notificationManager.notify(2147483647 - (int) database.getRows(), notification);

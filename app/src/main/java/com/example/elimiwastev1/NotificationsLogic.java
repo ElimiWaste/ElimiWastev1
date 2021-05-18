@@ -32,4 +32,5 @@ public class NotificationsLogic extends AppCompatActivity{
     public static long twoDayNotif(long theLifeL, long dateEnteredMillis) {
         return dateEnteredMillis + theLifeL - 2 * 86400000L ;
     }
+
 }
