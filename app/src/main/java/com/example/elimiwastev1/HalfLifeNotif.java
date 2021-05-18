@@ -55,9 +55,9 @@ public class HalfLifeNotif extends BroadcastReceiver{
         Notification notification = new NotificationCompat.Builder(context, Controller.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_one)
                 //title of the notification
-                .setContentTitle("Your food item \"" + name + "\" looks like it's more than halfway expired!")
+                .setContentTitle("One of your food items looks like it's more than halfway expired!")
                 //text of the notifications
-                .setContentText("Check on \"" + name + "\" that was purchased on \"" + date + "\"")
+                .setContentText("Check your app for further details.")
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 //Notification is of default priority
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

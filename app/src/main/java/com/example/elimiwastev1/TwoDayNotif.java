@@ -43,8 +43,8 @@ public class TwoDayNotif extends BroadcastReceiver{
 
         Notification notification = new NotificationCompat.Builder(context, Controller.CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle("Your \"" + name + "\" expires in less than two days!!!")
-                .setContentText("Check up on \""  + name +  "\"that was purchased on \"" + date + "\"" )
+                .setContentTitle("One of your food items expires in less than two days!!!")
+                .setContentText("Check your app for further details!" )
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
